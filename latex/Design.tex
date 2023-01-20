@@ -3,7 +3,36 @@
 \begin{document}
 
 \chapter{Design}\label{chap:design}
-The chapter in which you explain all the stuff your supervisor hopefully already knows. But its always good to make sure we're all on the same page especially with so mange pages.
+
+\section{Erarbeitung aller Funktionen}
+Nach Auswertung der Anforderungen lassen sich folgende Funktionen herausarbeiten, die der LW-Modus können muss.
+
+\begin{itemize}
+    \item Verbindungsaufbau und Verbindungsabbau sowie Wiederherstellung einer verlorenen Verbindung
+    \item Alarmierung des Alleinarbeiters und des Überwachungszentrums
+    \item Abrufen von Echtzeit Audio- und Videostreams
+    \item Zweiweg Sprachkommunikation
+    \item Positionsübermittlung zur Standortüberwachung und für Geofencing
+    \item Übermittlung von Textnachrichten
+\end{itemize}
+
+Die Grundfunktionalität des LW-Modus ist die Sicherstellung einer ununterbrochenen Verbindung zwischen dem Alleinarbeiter und einem Überwachungszentrum über die Body-Cam.
+Um das sicherzustellen wird ein sauberer Verbindungsaufbau und -abbau beim Einschalten oder Ausschalten der Body-Cam nötig.
+Um nach Aktivierung des LW-Modus eine durchgängige Verbindung zu gewährleisten, muss das Programm einen Verbindungsverlust innerhalb weniger Sekunden feststellen.
+Danach soll automatisch mit dem Wiederaufbau der Verbindung fortgefahren werden.
+Hierzu verbindet sich die Body-Cam nach einschalten mit einer vorher eingestellten URL, dem Überwachungszentrum.
+Beim Anmelden übermittelt sie wichtige Informationen wie Identifikationsnummer und Standort.
+Außerdem Parameter wie die Dauer nach dem bei Verbindungsverlust ein Alarm ausgelöst wird.
+Diese Verbindung dient vorerst der Anmeldung und Positionsübermittlung ohne ununterbrochene Verbindungsüberwachung und kann jederzeit vom Alleinarbeiter beendet werden.
+Beim Beenden der Verbindung wird diese sauber Abgebaut und die Body-Cam meldet sich beim Überwachungszentrum ab.
+Wenn ein Verbindungsverlust eintritt, wird eine automatische Wiederherstellung ohne Alarmauslösung ausgeführt.
+Bei eingeschalteten LW-Modus geht die Verbindung in einen \textcolor{red}{????} Zustand über.
+In diesem wird ein Verbindungsverlust unmittelbar festgestellt und geht auf beiden Seiten mit Auslösung eines Alarms einher, falls die Verbindung in einer vorher definierten Zeit nicht wiederhergestellt werden kann.
+
+Die Alarmierung
+
+
+
 
 \section{Statusmaschine}
 \section{Protokolldesign}
@@ -45,14 +74,14 @@ Der Nachrichtentyp gibt an welchen Typ die geschickte Mitteilung hat.
 %%
 Hier gibt es momentan die Typen Anfrage, Antwort, Herzschlag und initial Nachricht.
 %%
-Herzschlag wird immer dann vergeben, wenn ein Nachrichtenaustausch zwischen Client und Server stattfindet, der zur Verbindungsicherung dient.
+Herzschlag wird immer dann vergeben, wenn ein Nachrichtenaustausch zwischen Client und Server stattfindet, der zur Verbindungssicherung dient.
 %%
 Die initiale Nachricht schickt der Client einmalig am Anfang einer Verbindung an dem Server,
 um ihm Einstellungs- und Verbindungsparameter mitzuteilen.
 %%
 Im Nachrichteninhalt befindet sich alles, was die Mitteilung als Daten beinhaltet.
 %%
-Dies können beispielweise gerade genannte Parameter oder Anfrage bzw. Antwortdetails sein.
+Dies können beispielsweise gerade genannte Parameter oder Anfrage bzw. Antwortdetails sein.
 %%
 Durch den Aufbau der JSON kann das Datenfeld bei Bedarf ebenfalls strukturiert werden, um auch größere Datenmengen gut abbilden zu können.
 %%
