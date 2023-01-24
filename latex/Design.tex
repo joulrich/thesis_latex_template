@@ -28,6 +28,7 @@ Beim Beenden der Verbindung wird diese sauber Abgebaut und die Body-Cam meldet s
 Wenn ein Verbindungsverlust eintritt, wird eine automatische Wiederherstellung ohne Alarmauslösung ausgeführt.
 Bei eingeschalteten LW-Modus geht die Verbindung in einen \textcolor{red}{????} Zustand über.
 In diesem wird ein Verbindungsverlust unmittelbar festgestellt und geht auf beiden Seiten mit Auslösung eines Alarms einher, falls die Verbindung in einer vorher definierten Zeit nicht wiederhergestellt werden kann.
+\\
 
 Die Alarmierung besteht aus einer Alarmmeldung die auf beiden Seiten der Verbindung dargestellt wird.
 Sie kann visuell, akustisch und haptisch sein.
@@ -45,6 +46,24 @@ Dies zählt damit zu den unwichtigeren Meldungen und soll die Beteiligten nur au
 Die Intensität dieser Meldung steigt, wenn der Akkustand einen kritischen Punkt erreicht.
 Hierzu könnten dann lautere und längere Pieptöne sowie Vibration der Body-Cam genutzt werden.
 Wenn ein akuter Gefahrenfall auftritt, sollte sich die Alarmmeldung signifikant von anderen unterscheiden, um damit die volle Aufmerksamkeit des LW und des Überwachungszentrums auf die Situation zu lenken.
+\\
+
+Der Abruf von Echtzeit Audio- und Videostreams soll ebenfalls von der Body-Cam umgesetzt werden.
+Eine Video- und Audioaufzeichnung sowie die Möglichkeit diese zu streamen bietet die Body-Cam bereits, wie in \autoref{chap:grundlagen} beschrieben.
+Diese Option soll auch für den LW-Modus zur Verfügung stehen.
+Dabei kann ein Operator eine Anfrage an eine Body-Cam stellen, um die jeweiligen Streams vom Gerät abzurufen und im Überwachungszentrum anzeigen zu lassen.
+Diese Möglichkeit kann vor allem im Bereich einer Mobilfunkverbindung nur eingeschränkt nutzbar sein.
+So müssen hier aufgrund von Verbindungsstärke und -qualität Einbußen bei Verfügbarkeit und Qualität der Streams gemacht werden.
+Bei einer guten WLAN-Abdeckung wie sie in Gebäuden eingesetzt werden kann, besteht dieses Problem weniger.
+Hier kann durch die Nutzung einer WLAN-Verbindung eine wesentliche höhere Bandbreite und Verbindungsstärke genutzt werden.
+Außerdem haben Unternehmen die Möglichkeit die Abdeckung ihrer WLAN-Verbindung auszubauen, um eine bessere Qualität der Verbindung zu gewährleisten.
+Diese Option besteht bei der Nutzung der öffentlichen Mobilfunknetze nicht.
+\\
+
+Neben einer aktiven Anfrage durch das Überwachungszentrum kann der Stream bei Bedarf auch im Alarmfall übertragen werden.
+Hierfür kann die Body-Cam automatisch die Streams an das Zentrum übertragen, wenn der LW einen Alarm auslöst.
+Dies hat den Vorteil das der Operator nach Eingang einer Alarmmeldung sofort die Möglichkeit hat sich ein Bild von dem Gefahrenfall zu machen.
+Er kann dafür die Informationen aus Bild und Ton nutzen, um die Situation besser einzuschätzen und bei Bedarf weitere Schritte einzuleiten.
 
 
 
