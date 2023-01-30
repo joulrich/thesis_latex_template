@@ -56,6 +56,211 @@ Dabei spielen sowohl die eben beschriebenen Gefährdungsstufen, die Zeit bis zu 
 Mithilfe dieser Faktoren lässt sich ein Schutzniveau errechnen, welches für die Einteilung der Arbeiten genutzt wird.
 Nach dieser Einteilung werden dann Maßnahmen festgelegt, um die Sicherheit zu erhöhen, die Notfallkette zu gewährleisten oder um ein Verbot von Alleinarbeit zu bestimmen.
 
+Bei Betrachtung der einzelnen Meldeeinrichtungen fällt das PNA auf, da es als einziges ohne zusätzliche Maßnahmen in allen drei Stufen eingesetzt werden kann.
+Außerdem fällt das Mobiltelefone bzw. Smartphone auf.
+Da dieses Gerät sehr weit verbreitet ist und es viele Menschen im Alltag verwenden.
+Mit ihm kann immerhin die geringe und Teile der erhöhten Gefährdung gut abgedeckt werden.
+Sie eignen sich nicht für die kritische Stufe, da bestimmte Hardware-Anforderungen, die in der Industrie benötigt werden, nicht erfüllt sind.
+Darunter zählen der ausreichende Schutz vor Wasser, Staub, Chemikalien und rauem Umgang sowie der Gebrauch in sehr hohen oder niedrigen Temperaturen.
+Die Alarmauslösung muss zu jeder Zeit gewährleistet werden.
+Dazu müssen Geräte in dieser Gefährdungsstufe einen hardwareseitigen, roten Alarmknopf besitzen.
+Diese Eigenschaften erfüllen normale Smartphones aus dem Handel nicht.
+Dafür können sie sehr einfach in geringeren Stufen eingesetzt werden.
+In diesem Fall kann sich der Einsatz einer Notfall-App anbieten.
+Diese überträgt ein Signal an eine vorher festgelegte Stelle, zum Anzeigen eines Notfalls und um bei Bedarf die Rettungskräfte zu alarmieren.
+Bei guter Programmierung kann die App den Einsatzkomfort des Smartphones in Notfallsituation deutlich erhöhen und die Belastung auf den Arbeiter reduzieren.
+
+Das PNA kann in allen Bereichen eingesetzt werden und erfüllt auch die Industrieanforderungen.
+Es benutzt öffentliche Mobilfunknetze um eine dauerhafte Verbindung zu einer Empfangseinrichtung zu gewährleisten.
+Durch die Hardware-Notruftaste, eine Lokalisierung über GPS, Überwachung der Verbindung sowie des Geräte-Status und vorher definierten Alarmparametern, stellt sie die umfangreichste Lösung für Alleinarbeit dar.
+Unter Alarmparameter fallen beispielsweise professionelle Alarmbearbeitung durch eine Notrufzentrale, wiederholte Alarmübertragung und Voralarme.
+Alle Bauanforderungen und Funktionen die eine PNA erfüllen muss sind in der DGUV Regel 112-139 beschrieben.
+Diese beruht auf der Norm "DIN VDE V 0825-11: Geräte- und Prüfanforderungen für Personen-Notsignal-Anlagen unter Nutzung öffentlicher Telekommunikationsnetze". Genauere Details der einzelnen Funktionen werden durch den Einsatz einer Body-Cam als ein PNA in Kapitel \textcolor{red}{xxx} beschreiben.
+
+\section{IST-Zustand Body-Cam}
+\section{Erweiterung der Body-Cam mit dem Alleinarbeits-Modus}
+\section{Beschreibung des Gesamtsystems}
+
+\subsection{Komponenten}
+Das Gesamtsystem setzt sich hauptsächlich zusammen aus der Body-Cam (BC) als Clientgerät, dem „Lone Worker“(LW)
+als Träger der Body-Cam sowie einem Überwachungszentrum als Server (MC).
+%%
+Die BC baut nach einschalten eine Verbindung mit einer Gegenstelle auf und versucht diese zu halten.
+%%
+Hierbei ist der LW-Modus der BC noch nicht aktiv und es findet noch keine ununterbrochene Überwachung statt.
+%%
+\\
+
+Das Grundszenario kann wie folgt beschrieben werden. Der LW kann nun aktiv den LW-Modus auf seiner BC aktivieren.
+%%
+Damit stellt die BC eine Anfrage an ein MC für eine LW-Verbindung mit ununterbrochener Überwachung.
+%%
+Wenn diese durch das MC bestätigt ist, gehen beide Parteien in den LW-Modus über.
+%%
+Dies hat zur Folge das nach vorher festgelegten Parametern eine strenge Überwachung der Verbindung stattfindet.
+%%
+Bei Verbindungsverlust wird sowohl der LW als auch dem MC mitgeteilt das die ununterbrochene Überwachung nicht mehr gewährleistet werden kann.
+%%
+Außerdem kann das MC jederzeit Informationen über die BC sowie dessen Träger erfragen.
+%%
+So können Informationen über Gerätestatus, letzte Standorte oder Audio- und Videostreams durch das MC angefordert werden.
+%%
+Neben diesem Grundszenario gibt es noch viele weitere Möglichkeiten die später in den Use-Cases genauer beleuchtet werden.
+%%
+\\
+
+Die Body-Cam ist also ein Embedded-Gerät, welches zur Dokumentation und Beweissicherung von Konflikt- und Gefahrensituationen dient.
+%%
+Sie besitzt eine Kamera zur Videoaufzeichnung sowie ein großes Display zur Bedienung und um die deeskalierende Wirkung der BC zu verstärken.
+%%
+Vor allem durch die Platzierung am Oberkörper des Trägers kann eine gute Sicht aus Perspektive einer Person gewährleistet werden.
+%%
+Mit dem neuen Feature des „Lone Worker“-Modus soll die BC in ihrer Funktion erweitert und verstärkt werden.
+%%
+In Gefahrensituationen soll durch das neue Feature die Sicherheit gesteigert werden, gerade wenn der Träger allein ist.
+%%
+\\
+
+Der „Lone Worker“ als Träger der Body-Cam soll durch den Modus seine Aufgaben besser und mit einer größeren Sicherheit erledigen können.
+%%
+Darunter zählen zum Beispiel die Überwachung und/oder Sicherung eines Bereiches, Kontrollgänge durch ein Gebäude oder
+als Sicherheitspersonal in Einkaufszentren, Bahn, Schule und vielem mehr.
+%%
+Der Träger soll die Sicherheit haben durch die BC mit dem LW-Modus unter einer ununterbrochenen Überwachung zustehen,
+die im Notfall schnell auf Gefahrensituationen reagieren kann.
+%%
+\\
+
+Das Überwachungszentrum dient als Leitstelle wohin sich mehrere BC verbinden können.
+%%
+Je nach zur Verfügung stehenden Kapazitäten können dann strengere Überwachungen mit eingeschaltetem LW-Modus durchgeführt werden.
+%%
+Den Aufbau und Abbau von Verbindungen sowie das Anfordern und Darstellen von Informationen über die einzelnen BCs wird
+durch einen Automatismus realisiert.
+%%
+Die Bestätigung des LW-Modus mit Übergang in die ununterbrochene Überwachung muss jedoch aktiv durch einen Mitarbeiter des MC stattfinden.
+\\
+
+\subsection{Use-Cases}
+\section{Anforderungen des Gesamtsystems}
+Aus den Punkten des Lastenheftes lassen sich folgende Anforderungen für das Gesamtsystem herausarbeiten.
+\\
+
+Die BC sollte einen Schutz gegen versehentliche Aktivierung des LW-Modus besitzen.
+%%
+Dies lässt sich zum Beispiel wie folgt realisieren: Die Aktivierung eines Voralarms, der ohne Konsequenzen abgebrochen werden kann.
+%%
+Ein spezielles Design des Aktivierungstasters. Hier kann beispielsweise ein versenkter Taster benutzt werden für den mehr Kraft zur
+Aktivierung benötigt wird.
+%%
+Die Dauer des Tastendrucks zur Aktivierung des Modus kann erhöht werden, sollte jedoch im Bereich von wenigen Sekunden sein.
+%%
+\\
+
+Es sollte die Möglichkeit für eine „Two-Way-Audio“-Verbindung zwischen Client und Server bestehen.
+%%
+Dies schafft für den LW die Gelegenheit Kommentare der überwachenden Person zu hören und auf diese zu Antworten.
+%%
+Außerdem kann der LW nach mündlicher Aufforderung eine Aktion bestätigen oder Informationen über den Einsatzfortschritt geben.
+%%
+\\
+
+Nach einer erfolgreichen Authentifizierung soll das MC Fernzugriff zum LW bekommen.
+%%
+Dies soll folgende Optionen ermöglichen: Abruf von Audio- und Videostreams, Abruf von auf dem Gerät gespeicherten Mediendateien
+(Datengröße kann für LTE ggf. zu groß sein), Abruf von Geräteparametern und das setzten bestimmter Parameter, Lesen des Gerätestatus
+sowie die Möglichkeit eine neue Firmware auf einzelne Geräte zu übertragen.
+%%
+Einige dieser Optionen wie das setzten von Geräteparametern oder ein Update der Firmware sollten nur bei ausgeschaltetem LW-Modus
+und nach Bestätigung des LW möglich sein.
+%%
+\\
+
+Der LW soll zu jeder Zeit die Möglichkeit haben Informationen über die Stärke des Netzwerksignals und den Batteriestatus am Gerät zu sehen.
+%%
+Hierfür soll der aktuelle Signalpegel und Batteriezustand auf dem Display zu sehen sein sowie ein haptisches, akustisches oder visuelles
+Feedback bekommen, wenn keine Verbindung verfügbar ist oder der Batteriestand in einen kritischen Bereich fällt.
+%%
+Dem MC sollen diese Informationen sowie die Benachrichtigung bei kritischen Batteriezustand ebenfalls zur Verfügung stehen.
+%%
+\\
+
+Dem Träger der BC soll die Gelegenheit haben einen „Timer“ einzustellen.
+%%
+Dieser dient dazu die Alarmfunktion temporär abzustellen.
+%%
+Diese Option ist vor allem sinnvoll, wenn es zu einer erwartenden Einschränkung des Kommunikationsnetzes kommt.
+%%
+Dies tritt beispielweise auf, wenn sich der LW in einen Fahrstuhl begibt.
+%%
+In dem Fall kann der Träger ein aussetzten der Verbindung in der BC vermerken.
+%%
+In dieser Zeit wird bei Verbindungsverlust kein Alarm auf beiden Seiten der Kommunikation ausgelöst.
+%%
+Das MC wird über das Einschalten dieser Funktion informiert.
+%%
+Wenn nach Ablauf der Zeit keine Verbindung zwischen BC und MC hergestellt werden kann, gehen beide Parteien in den Alarmzustand über.
+%%
+Der LW hat die Möglichkeit den Timer vor Ablauf der Zeit zu deaktivieren und damit wieder in die normale Funktionsweise des LW-Modus überzugehen.
+%%
+\\
+
+Die BC soll dem MC auf Anfrage die aktuelle Position und/oder einer Liste der letzten 50 bekannten Positionen übermitteln.
+%%
+Dies wird vor allem dafür genutzt das Konfigurieren und Überwachen von „Geo-Fences“ zu ermöglichen.
+%%
+Damit können Ein- und Austreten aus bestimmten Bereichen überwacht werden und dem MC automatische Benachrichtigungen
+über diese Vorgänge gemacht werden.
+%%
+Außerdem können auf der BC bestimmte Reaktionen konfiugriert werden die beim Betreten oder Verlassen von „Geo-Fence“-Gebieten aktiv werden.
+%%
+Zum Beispiel kann der LW-Modus aktiviert oder deaktiviert werden, automatisch ein Videostream an das MC übertragen werden
+oder der LW wird explizit durch ein Feedback vor dem Betreten eines besonderen Gefahrengebiets gewarnt.
+%%
+\\
+
+Das MC soll die Möglichkeit haben Statistiken über die einzelnen Geräte anfertigen können.
+%%
+Dafür müssen alle Aktivierungsmeldungen, Alarme, einschließlich Fehlalarme erfasst werden.
+%%
+Ebenfalls soll die Verfügbarkeit des Mobilfunknetztes aufgezeichnet werden.
+%%
+Diese Informationen müssen von der BC bereitgestellt werden und sind vom MC zu erfassen.
+%%
+Außerdem soll die BC alle Events dokumentieren und auf ihrer SD-Karte speichern.
+%%
+Darunter zählen die oben beschriebenen Auskünfte sowie alle Gerätestatusinformationen wie beispielsweise Batteriestatus
+oder Speicherplatz, GPS-Standorte, Änderungen in der Konfiguration, Aktivierung und Deaktivierung des LW-Modus
+sowie des temporären „Timer“-Modus, Anfragen und Antworten von und an das MC und Softwareinformationen.
+%%
+\\
+
+Die BC soll dem LW ein haptisches, akustisches und visuelles Feedback geben können.
+%%
+Dies kann in Form eines Voralarms sein, wie oben beim Aktivieren des LW-Modus beschrieben oder beim Ausführen eines Alarms
+und die Aufmerksamkeit des LW zu erhalten.
+%%
+Außerdem kann dadurch das MC dem LW durch ein haptisches Feedback einen „Stillen“-Alarm senden.
+%%
+Weiterhin soll das Display der BC für visuelles Feedback sowie das Anzeigen von Textnachrichten vom MC an den LW genutzt werden.
+%%
+Außerdem kann das MC über diese Schnittstelle Fragen an den LW stellen.
+%%
+Diese kann der Träger durch auf dem Display eingeblendete Optionen beantworten.
+%%
+Diese werden vom MC mit der Frage mitgeschickt und sind somit vorher festgelegt.
+%%
+Da das Display über eine Touch-Screen Funktion verfügt, kann er LW die Antwortmöglichkeiten mit Berührung des Displays auswählen.
+%%
+\\
+
+Die BC soll die Möglichkeit bieten die Konfigurationsmöglichkeiten einzuschränken, um ungewollte oder unbefugte Änderungen zu verhindern.
+%%
+Dies dient in erster Linie der Sicherheit des Trägers und soll einen einfachen und schnellen Einsatz gewährleisten.
+%%
+So können die Geräte vorher durch ein Unternehmen oder eine Abteilung konfiguriert und anschließend an die einzelnen LW ausgeteilt werden.
+\\
+
 
 \subfilebib % Makes bibliography available when compiling as subfile
 \end{document}
