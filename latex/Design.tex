@@ -11,7 +11,7 @@ Nach Auswertung der Anforderungen lassen sich folgende Funktionen herausarbeiten
     \item Verbindungsaufbau und Verbindungsabbau sowie Wiederherstellung einer verlorenen Verbindung
     \item Alarmierung des Alleinarbeiters und des Überwachungszentrums
     \item Abrufen von Echtzeit Audio- und Videostreams
-    \item Zweiweg Sprachkommunikation
+    \item Zweiwege Sprachkommunikation
     \item Positionsübermittlung zur Standortüberwachung und für Geofencing
     \item Übermittlung von Textnachrichten
 \end{itemize}
@@ -64,7 +64,38 @@ Neben einer aktiven Anfrage durch das Überwachungszentrum kann der Stream bei B
 Hierfür kann die Body-Cam automatisch die Streams an das Zentrum übertragen, wenn der LW einen Alarm auslöst.
 Dies hat den Vorteil das der Operator nach Eingang einer Alarmmeldung sofort die Möglichkeit hat sich ein Bild von dem Gefahrenfall zu machen.
 Er kann dafür die Informationen aus Bild und Ton nutzen, um die Situation besser einzuschätzen und bei Bedarf weitere Schritte einzuleiten.
+\\
 
+Um den Informationsaustausch weiter zu verbessern, baut die Body-Cam nach Bedarf einen Zweiwege-Sprachkanal zwischen dem Operator und dem LW auf.
+Dieser ermöglicht einen aktiven Austausch zwischen Träger und Empfangseinrichtung.
+Der Austausch von Informationen findet damit nicht mehr nur einseitig in Richtung des MC statt.
+So hat der LW die Möglichkeit sich mit einem Mitarbeiter in der Empfangseinrichtung über verschiedene Situation auszutauschen.
+Das trägt unter anderem zur Minderung des Isolationsgefühls(Quelle wie in Einleitung?) bei.
+Außerdem kann ein Operator beispielsweise, nach dem er in einer Gefahrensituation bereits Informationen durch die Streams erhalten hat, den LW kontaktieren, um weitere Sachverhalte zu bekommen und mehr Klarheit über die Situation zu gewinnen.
+\\
+
+Eine weitere Funktion ist die Standortübermittlung.
+Die Body-Cam übermittelt kontinuierlich ihren Standort an das Überwachungszentrum.
+Die Genauigkeit der Position wird durch die Verbindung von GPS, Mobilfunk, WLAN und Bluetooth erhöht.
+Dies ist in erster Linie wichtig um bei einem Notfall den exakten Standort der in Gefahr befindlichen Person zu detektieren.
+So können Notfallkräfte im Ernstfall schnell und gezielt reagieren.
+Ein weiterer Vorteil dieser Positionsüberwachung ist das sogenannte "Geofencing".
+Dies beschreibt das automatische Auslösen bestimmter Aktion beim Ein- oder Austritt aus einem vorher festgelegten Bereich.
+(https://de.wikipedia.org/wiki/Geofencing finde noch keine bessere Quelle).
+In Bezug auf den LW-Modus könnten diese Aktionen z.B. das Ein- oder Ausschalten des Modus sein, wenn der Träger mit seiner Schicht beginnt und den zu überwachenden Bereich betritt.
+Außerdem wäre es möglich einen Bereich mit besonders hohen Gefahrenpotenzial zu markieren.
+Der LW würde dann bei betreten über diesen Umstand per Body-Cam informiert werden, damit er die volle Konzentration auf seine Sicherheit lenken kann.
+Zusätzlich kann die Standortüberwachung in die Protokollierung der Alleinarbeit mit einfließen um diese mit Informationen über Laufwege und Aufenthaltsdauer zu verbessern.
+\\
+
+Durch das vorhandene Display mit Touch-Funktion(netco datenblatt) besteht die Möglichkeit zum Anzeigen und beantworten von Textnachrichten.
+Mit den Nachrichten kann das Überwachungszentrum dem LW kurze Informationen übermitteln oder nach dem Status fragen, ohne eine Sprachverbindung zu benutzen.
+Die Beantwortung kann der Träger über vorher definierte Antworten übernehmen, die als Buttons auf dem Display erscheinen.
+Automatisch generierte Textnachrichten können zur Unterstützung genutzt werden.
+Sie können nach bestimmten Ereignissen mehr Informationen bereitstellen.
+Unter diese Events zählen beispielsweise Alarmauslösung, Ein- oder Austritt aus einem Geofencing-Bereich, Fehlfunktionen oder Statusveränderungen der Body-Cam.
+Außerdem wird das Display dafür genutzt alle möglichen Statusinformationen über das Gerät anzuzeigen, wie Akkustand, Mobilfunkstärke oder Temperatur.
+\\
 
 \section{Protokolldesign}
 Damit alle Anforderungen an die Kommunikation zwischen BC und MC erfüllt werden können, wird ein eigenes Protokoll verwendet.
