@@ -5,10 +5,34 @@
 \chapter{Realisierung}\label{chap:realisierung}
 
 \section{Vorbereitung}
-\subsection{Technologien}
+\subsection{Technologien}\label{chap:technologien}
 \subsection{Technische Grundlagen}
 \section{Implementierung}
 \subsection{Entwicklungsprozess}
+
+Für die Umsetzung und Implementierung den Prototypen wurde ein agiler Entwicklungsprozess genutzt.
+Dafür wurden kontinuierliche Iterationen über alle Phasen des Projekts verwendet.
+Als ersteres wurde überlegt wie die bestehende Body-Cam an die Aufgabe der Überwachung bei Alleinarbeit angepasst werden kann.
+Diese Anpassungen wurden als Anforderungen aufgeschrieben und in mehreren Iterationen weiter ausgeführt und verbessert.
+Anschließend wurden konkrete Funktionen herausgearbeitet, die durch den neuen Lone-Worker-Modus abgedeckt werden sollen.
+Es wurden verschiedene Statemachines(Fußnote oder auf deutsch lassen?) entwickelt die einen ersten Programmablauf beschreiben.
+Dieser ging über Verbindungsaufbau, -abbau und -wiederherstellung, den Umgang mit Ein- und Ausgeheden Nachrichten sowie der Einbindung in die bereits bestehende Body-Cam Implementierung.
+Danach wurden das Protokoll für die Kommunikation zwischen Gerät und Überwachungszentrum sowie die Primitiven zwischen Body-Cam und Lone-Worker-Modus herausgearbeitet.
+Nach der Designphase begann die Implementierung.
+Hier wurde sich als Erstes anhand der Anforderungen und gebeten Technologien der bestehenden Implementierung für die Technologien aus Kapitel \autoref{chap:technologien} entschieden.
+Außerdem wurde im Rahmen der Arbeit die Implementierung des Lone-Worker-Modus auf die Grundfunktionalität des Verbindungsaufbaus, -abbaus und -wiederherstellung begrenzt.
+Einzelheiten zur konkreten Umsetzung folgen im nächsten Kapitel.
+\\
+
+(Bin mir nicht sicher ob das mit rein muss aber es gehört ja zum Entwicklungsprozess)
+Zur Entwicklung des Prototyps kam die Programmiersprache C++ sowie ein Linux Ubuntu 20.04 LTS zum Einsatz.
+Auf diesem wurden dann alle nötigen Bibliotheken gebaut und mithilfe von CMake eine Projektstruktur entworfen.
+CMake kümmert sich außerdem im Prozess des Compiling und Linking um die Verwaltung und Übersetzung der verschiedenen Quelldateien
+sowie die Einbindung und Verknüpfung der Header und Bibliotheken.
+Dabei wurde der Compiler G++ in der Version 9.4.0 genutzt.
+Als Programmiereditor wurde Visual Studio Code mit der Erweiterung "clangd" verwendet.
+Zur Versionsverwaltung wurde Git genutzt, mit einem eigenen Repository auf GitHub.
+
 \subsection{Umsetzung}
 \subsection{Herausforderungen bei der Implementierung}
 \section{Ergebnisse}
