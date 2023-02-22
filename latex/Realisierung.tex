@@ -7,7 +7,7 @@
 Nach der Planungs- und Designphase wird nun die Realisierung des Projekts behandelt. Im Detail, die Realisierung des Prototyps, der eine einfache Verbindung zwischen Client und Server ermöglicht sowie die Stabilität sicherstellt.
 
 \section{Vorbereitung}
-\subsection{Technologien}\label{chap:technologien}
+\subsection{Technologien und technische Grundlagen}\label{chap:technologien}
 
 Das neue Lone-Worker Feature der Body-Cam erfordert eine dauerhafte, bidirektionale Verbindung zwischen Body-Cam als Client und Überwachungszentrum als Server.
 Die Kommunikation soll dabei in Echtzeit ablaufen.
@@ -63,15 +63,23 @@ Das ist beispielsweise von Vorteil bei der Implementierung eines Heartbeat zwisc
 (vgl. \cite[]{whyAsync} und \cite[]{thinkAsync})
 \\
 
-% heartbeat
-% Sache aus einleitung das das nativ nicht zu verfügung gestellt wird und was das ist
-% json?
-% warum json als Protokoll für die Nachrichten eingesetzt wird steht aber eventuell schon bei Protokoll?
+Für eine dauerhafte und zuverlässige Verbindung zwischen Body-Cam und Überwachungszentrum wird ein Mechanismus benötigt der einen Verbindungsabbruch in kurzer Zeit feststellt.
+Diese Möglichkeit wird von Mobilfunk oder WLAN nativ nicht zur Verfügung gestellt.
+Aus diesem Grund wurde für die Kommunikation im Prototypen ein Heartbeat-Mechanismus implementiert.
+\\
 
-\subsection{Technische Grundlagen}
-
-% https://www.boost.org/doc/libs/1_46_0/doc/html/boost_asio/overview/core/basics.html
-% http://blog.think-async.com/2010/04/timeouts-by-analogy.html
+Heartbeats sind spezielle Signale, die in der Regel zwischen Client- und Server-Anwendungen ausgetauscht werden.
+Sie stellen sicher, dass die Verbindung zwischen den beiden Parteien aktiv und stabil bleibt.
+Diese Signale können beispielsweise als "Herzschlag" der Verbindung betrachtet werden.
+Damit wird gezeigt das die Verbindung immer noch lebt und das die beteiligten Parteien bereit sind Daten auszutauschen.
+In der Regel werden Heartbeats in bestimmten Zeitintervallen gesendet, um sicherzustellen, dass die Verbindung nicht ausfällt oder unterbrochen wird.
+Wenn ein Client beispielsweise über längere Zeit keine Daten an den Server sendet, könnte der Server fälschlicherweise annehmen, dass die Verbindung unterbrochen wurde, und die Verbindung trennen.
+Durch das regelmäßige Senden von Heartbeats kann dies verhindert werden.
+Ebenfalls kann dadurch bei Netzwerkproblemen schnell festgestellt werden das die Verbindung zwischen beiden Parteien gestört ist.
+Sie tragen damit dazu bei, dass die Verbindung bei Bedarf automatisch wiederhergestellt wird und die Zuverlässigkeit erhöht wird.
+Für das Lone-Worker Feature sind sie also wichtig, um dauerhaft eine Verbindung zwischen Client und Server aufrechtzuerhalten und ermöglichen dadurch eine effiziente und zuverlässige Kommunikation zwischen den beiden Parteien.
+\textcolor{red}{QUELLE suchen}.
+\\
 
 \section{Implementierung}
 \subsection{Entwicklungsprozess}
@@ -81,25 +89,81 @@ Dafür wurden kontinuierliche Iterationen über alle Phasen des Projekts verwend
 Als ersteres wurde überlegt wie die bestehende Body-Cam an die Aufgabe der Überwachung bei Alleinarbeit angepasst werden kann.
 Diese Anpassungen wurden als Anforderungen aufgeschrieben und in mehreren Iterationen weiter ausgeführt und verbessert.
 Anschließend wurden konkrete Funktionen herausgearbeitet, die durch den neuen Lone-Worker-Modus abgedeckt werden sollen.
-Es wurden verschiedene Statemachines(Fußnote oder auf deutsch lassen?) entwickelt die einen ersten Programmablauf beschreiben.
+Es wurden verschiedene Statemachines entwickelt die einen ersten Programmablauf beschreiben.
 Dieser ging über Verbindungsaufbau, -abbau und -wiederherstellung, den Umgang mit Ein- und Ausgeheden Nachrichten sowie der Einbindung in die bereits bestehende Body-Cam Implementierung.
 Danach wurden das Protokoll für die Kommunikation zwischen Gerät und Überwachungszentrum sowie die Primitiven zwischen Body-Cam und Lone-Worker-Modus herausgearbeitet.
 Nach der Designphase begann die Implementierung.
-Hier wurde sich als Erstes anhand der Anforderungen und gebeten Technologien der bestehenden Implementierung für die Technologien aus Kapitel \autoref{chap:technologien} entschieden.
+Hier wurde sich als Erstes anhand der Anforderungen und gegebenen Technologien der bestehenden Implementierung für die Technologien aus Kapitel \autoref{chap:technologien} entschieden.
 Außerdem wurde im Rahmen der Arbeit die Implementierung des Lone-Worker-Modus auf die Grundfunktionalität des Verbindungsaufbaus, -abbaus und -wiederherstellung begrenzt.
 Einzelheiten zur konkreten Umsetzung folgen im nächsten Kapitel.
 \\
 
-(Bin mir nicht sicher ob das mit rein muss aber es gehört ja zum Entwicklungsprozess)
 Zur Entwicklung des Prototyps kam die Programmiersprache C++ sowie ein Linux Ubuntu 20.04 LTS zum Einsatz.
 Auf diesem wurden dann alle nötigen Bibliotheken gebaut und mithilfe von CMake eine Projektstruktur entworfen.
+Die wichtigsten Bibliotheken sind die Boost-Sammlung, insbesondere Boost-Beast und Boost-Asio für die WebSockets-Verbindung sowie die rapidjson Bibliothek als JSON-Parser.
 CMake kümmert sich außerdem im Prozess des Compiling und Linking um die Verwaltung und Übersetzung der verschiedenen Quelldateien
 sowie die Einbindung und Verknüpfung der Header und Bibliotheken.
 Dabei wurde der Compiler G++ in der Version 9.4.0 genutzt.
 Als Programmiereditor wurde Visual Studio Code mit der Erweiterung \glqq clangd\grqq{} verwendet.
 Zur Versionsverwaltung wurde Git genutzt, mit einem eigenen Repository auf GitHub.
+\\
 
 \subsection{Umsetzung}
+
+gibt client und server seite
+server wird gestatet und wartet auf Verbindung
+client verbindet sich zum server - Websocket
+nachricht wird geschickt mit timeout zeug
+client übernimmt er warteten teil und lauscht auf anfragen vom server
+server schickt entweder heartbeat nachricht oder anfragen
+statemaschine vllt hier her und nicht in design teil ?
+
+Im praktischen Teil der Bachelorarbeit wurde der Prototyp einer Client-Server-Verbindung implementiert.
+Das Hauptaugenmerk lag dabei auf der Umsetzung der Client-Seite.
+Konkret wurde eine Kommunikationsbibliothek programmiert, die später in den Code der vorhanden Body-Cam eingebunden werden kann.
+Sie erweitert die bestehende Implementierung um das Lone-Worker Feature.
+Über die in \autoref{chap:Primitiven} beschriebenen Schnittstellen kann die Body-Cam den neuen Lone-Worker-Modus ansteuern.
+\\
+
+Der Client befindet sich auf der Body-Cam.
+Sobald der Träger die Kamera einschaltet versucht sie sich mit dem Überwachungszentrum zu verbinden, welches vorher konfiguriert worden ist.
+Die Aufgaben des Clients beinhalten:
+\begin{itemize}
+    \item Initialisierung der Lone-Worker-Verbindung zum Überwachungszentrum
+    \item Halten einer dauerhaften und stabilen Verbindung zum Server
+    \item Wiederherstellung der Kommunikation nach Verbindungsverlust
+    \item Schnelle Beantwortung aller Anfragen vom Server
+\end{itemize}
+
+Das Überwachungszentrum repräsentiert die Server-Seite.
+Sie wartet auf eingehende Verbindungen von Body-Cams und schickt nach dem Verbindungsaufbau in regelmäßigen Abständen Anfragen oder Heartbeats an den Client.
+Im Fall das die beiden Seiten nach einer konfigurierbaren Zeitspanne keine neuen Nachrichten von der Gegenseite feststellen, wird eine Fehlermeldung ausgegeben.
+Diese Meldung ist der spätere Alarm, den die beiden Seiten bei einem Verbindungsausfall bekommen.
+\\
+
+Der Verbindungsaufbau erfolgt über das Websocket-Protokoll.
+Die Websocket-Verbindung wird über ein Handshaking-Verfahren aufgebaut.
+Dafür werden die asynchronen Methoden aus der Boost-Beast-Bibliothek verwendet.
+Als Erstes wird mit einem \glqq async_resolve\grqq{} und der URL und dem Port die IP-Adresse des Servers ermittelt.
+Danach wird mit einem \glqq async_connect\grqq{} die Verbindung aufgebaut und über die Methode \glqq async_handshake\grqq{} das Handshake-Verfahren durchgeführt.
+Nach dieser Prozedur können Server und Client über asynchrone Lese- und Schreibmethoden Nachrichten austauschen.
+Im Fehlerfall, wenn beispielsweise der Server nicht erreichbar ist oder das Handshaking-Verfahren fehlschlägt wird die Verbindung beendet.
+Das Verbindungsobjekt wird verworfen und nach einer kurzen Verzögerung wird ein erneuter Verbindungsversuch gestartet.
+Es kommt zum Alarmfall, wenn keine vollständige Verbindung in einer vorher festgelegten Zeit hergestellt werden kann.
+\\
+
+Verbindungswiederherstellung: Gehe darauf ein, wie dein Programm die Verbindung zwischen Client und Server wiederherstellt, falls die Verbindung abbricht oder verloren geht. Beschreibe dabei auch, welche Strategien und Technologien du für die Wiederherstellung der Verbindung einsetzt.
+
+Nachrichtenaustausch erklären Protokoll und so
+
+Code: Beschreibe den Code, den du für dein Programm geschrieben hast. Hier solltest du auf wichtige Codeabschnitte und -funktionen eingehen und erläutern, wie sie funktionieren.
+
+Tests: Erkläre, wie du dein Programm getestet hast und welche Testfälle du verwendet hast. Beschreibe dabei auch, wie du sicherstellst, dass dein Programm robust und fehlertolerant ist.
+
+Performance: Gehe darauf ein, wie gut dein Programm in Bezug auf Performance und Skalierbarkeit abschneidet. Beschreibe dabei auch, welche Maßnahmen du ergriffen hast, um die Performance deines Programms zu verbessern.
+
+
+
 \subsection{Herausforderungen bei der Implementierung}
 \section{Ergebnisse}
 \subsection{Testprotokoll}

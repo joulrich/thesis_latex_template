@@ -1,0 +1,1 @@
+{"rule":"SENT_START_SIN_PLU","sentence":"^\\QNachrichtenaustausch erklären Protokoll und so\\E$"}
