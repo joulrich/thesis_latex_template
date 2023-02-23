@@ -110,12 +110,6 @@ Zur Versionsverwaltung wurde Git genutzt, mit einem eigenen Repository auf GitHu
 
 \subsection{Umsetzung}
 
-gibt client und server seite
-server wird gestatet und wartet auf Verbindung
-client verbindet sich zum server - Websocket
-nachricht wird geschickt mit timeout zeug
-client übernimmt er warteten teil und lauscht auf anfragen vom server
-server schickt entweder heartbeat nachricht oder anfragen
 statemaschine vllt hier her und nicht in design teil ?
 
 Im praktischen Teil der Bachelorarbeit wurde der Prototyp einer Client-Server-Verbindung implementiert.
@@ -144,13 +138,23 @@ Diese Meldung ist der spätere Alarm, den die beiden Seiten bei einem Verbindung
 Der Verbindungsaufbau erfolgt über das Websocket-Protokoll.
 Die Websocket-Verbindung wird über ein Handshaking-Verfahren aufgebaut.
 Dafür werden die asynchronen Methoden aus der Boost-Beast-Bibliothek verwendet.
-Als Erstes wird mit einem \glqq async_resolve\grqq{} und der URL und dem Port die IP-Adresse des Servers ermittelt.
+Als Erstes wird mit einem \glqq async_resolve\grqq{} sowie der URL und dem Port die IP-Adresse des Servers ermittelt.
 Danach wird mit einem \glqq async_connect\grqq{} die Verbindung aufgebaut und über die Methode \glqq async_handshake\grqq{} das Handshake-Verfahren durchgeführt.
 Nach dieser Prozedur können Server und Client über asynchrone Lese- und Schreibmethoden Nachrichten austauschen.
 Im Fehlerfall, wenn beispielsweise der Server nicht erreichbar ist oder das Handshaking-Verfahren fehlschlägt wird die Verbindung beendet.
 Das Verbindungsobjekt wird verworfen und nach einer kurzen Verzögerung wird ein erneuter Verbindungsversuch gestartet.
 Es kommt zum Alarmfall, wenn keine vollständige Verbindung in einer vorher festgelegten Zeit hergestellt werden kann.
 \\
+
+Nachdem eine vollständige Verbindung zwischen Client und Server hergestellt ist, werden vom Server regelmäßig Telegramme an den Client versendet.
+Diese Nachrichten sind entweder Anfragen nach beispielsweise Statusinformationen, Standortdaten und Streams oder Heartbeats.
+Beim Empfangen einer Nachricht auf Client-Seite wird der Timer, der einen Verbindungsverlust feststellt zurückgesetzt.
+Anschließend beantwortet der Client das Telegram.
+Der Server-Timer wird ebenfalls neu gestartet, wenn der Server die Antwort registriert.
+Mit diesem Vorgehen soll sichergestellt werden, dass ein Verbindungsverlust rechtzeitig erkannt wird und eine schnelle Wiederherstellung der Verbindung vorgenommen werden kann.
+Im Fall eines detektierten Verlustes wird nach dem gleichen Prinzip vorgegangen wie bei einem Fehlerfall im Verbindungsaufbau.
+Das gewährleistet einen sauberen Wiederaufbau ohne mögliche Artefakte aus älteren Verbindungen.
+
 
 Verbindungswiederherstellung: Gehe darauf ein, wie dein Programm die Verbindung zwischen Client und Server wiederherstellt, falls die Verbindung abbricht oder verloren geht. Beschreibe dabei auch, welche Strategien und Technologien du für die Wiederherstellung der Verbindung einsetzt.
 
