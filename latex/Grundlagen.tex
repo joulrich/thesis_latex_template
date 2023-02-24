@@ -4,7 +4,7 @@
 
 \chapter{Grundlagen}\label{chap:grundlagen}
 
-\section{Aktuelle Alleinarbeitslösungen}
+\section{Aktuelle Alleinarbeitslösungen}\label{alleinarbeit}
 
 Im Arbeitsalltag treten immer wieder Situation auf die zur Gefährdung von Personen führt.
 Diese Situationen ergeben sich aus den verschiedenen Arbeitsverfahren, Tätigkeiten, Werkstoffen sowie Umgebungen die in allen Arbeitsbereichen unterschiedlich zur Geltung kommen.
@@ -154,69 +154,44 @@ Audio- und Videodaten sowie Standortinformationen werden dabei bereits durch Kam
 Der Lone-Worker-Modus erweitert also die bestehen Funktionen der Body-Cam zur Prävention, Deeskalation und Protokollierung um eine Möglichkeit sie als PNA für Alleinarbeit zuverlässig einzusetzen.
 \\
 
-\section{Beschreibung des Gesamtsystems}
-
-\subsection{Komponenten}
-Das Gesamtsystem setzt sich hauptsächlich zusammen aus der Body-Cam (BC) als Clientgerät, dem „Lone Worker“(LW)
-als Träger der Body-Cam sowie einem Überwachungszentrum als Server (MC).
-%%
-Die BC baut nach einschalten eine Verbindung mit einer Gegenstelle auf und versucht diese zu halten.
-%%
-Hierbei ist der LW-Modus der BC noch nicht aktiv und es findet noch keine ununterbrochene Überwachung statt.
-%%
+\section{Komponentenbeschreibung des Gesamtsystems}
+% hier noch ne Graphik einfpügen die das zusammenspiel der Komponenten zeigt
+Das Gesamtsystem setzt sich hauptsächlich zusammen aus der Body-Cam (BC) als Clientgerät, dem „Lone-Worker“(LW)
+als Träger der Body-Cam sowie einem Überwachungszentrum als Server (MC) mit einem oder mehreren Operatoren.
+Außerdem ist das Zentrum mit offiziellen Notrufstationen verbunden, um eine schnelle Rettung und Versorgung der Lone-Worker zu gewährleisten.
 \\
 
-Das Grundszenario kann wie folgt beschrieben werden. Der LW kann nun aktiv den LW-Modus auf seiner BC aktivieren.
-%%
-Damit stellt die BC eine Anfrage an ein MC für eine LW-Verbindung mit ununterbrochener Überwachung.
-%%
-Wenn diese durch das MC bestätigt ist, gehen beide Parteien in den LW-Modus über.
-%%
-Dies hat zur Folge das nach vorher festgelegten Parametern eine strenge Überwachung der Verbindung stattfindet.
-%%
-Bei Verbindungsverlust wird sowohl der LW als auch dem MC mitgeteilt das die ununterbrochene Überwachung nicht mehr gewährleistet werden kann.
-%%
-Außerdem kann das MC jederzeit Informationen über die BC sowie dessen Träger erfragen.
-%%
-So können Informationen über Gerätestatus, letzte Standorte oder Audio- und Videostreams durch das MC angefordert werden.
-%%
-Neben diesem Grundszenario gibt es noch viele weitere Möglichkeiten die später in den Use-Cases genauer beleuchtet werden.
-%%
+Der in sich in Alleinarbeit befindliche Arbeit wird Lone-Worker genannt.
+Er verrichtet die im \autoref{chap:alleinarbeit} genannte gefährliche Arbeit.
+Um dies alleine mit einer angemessenen Sicherheit tun zu können wird er bei seiner Arbeit dauerhaft überwacht.
+Zu diesem Zweck trägt er am Oberkörper die Body-Cam.
+Die Body-Cam ist ein Embedded-Gerät, welches unter anderem eine Weitwinkelkamera zur Videoaufzeichnung sowie ein großes Display zur Bedienung hat.
+Durch die Platzierung am Oberkörper des Trägers kann eine gute Sicht aus Perspektive einer Person gewährleistet werden.
+Die Träger der Body-Cam schaltet zu Beginn seiner Arbeit das Gerät ein.
+Dieses verbindet sich dann über z.B. das öffentliche Mobilfunknetz mit dem hinterlegten Überwachungszentrum.
 \\
 
-Die Body-Cam ist also ein Embedded-Gerät, welches zur Dokumentation und Beweissicherung von Konflikt- und Gefahrensituationen dient.
-%%
-Sie besitzt eine Kamera zur Videoaufzeichnung sowie ein großes Display zur Bedienung und um die deeskalierende Wirkung der BC zu verstärken.
-%%
-Vor allem durch die Platzierung am Oberkörper des Trägers kann eine gute Sicht aus Perspektive einer Person gewährleistet werden.
-%%
-Mit dem neuen Feature des „Lone Worker“-Modus soll die BC in ihrer Funktion erweitert und verstärkt werden.
-%%
-In Gefahrensituationen soll durch das neue Feature die Sicherheit gesteigert werden, gerade wenn der Träger allein ist.
-%%
+Damit der Lone-Worker seine Arbeit aufnehmen kann, muss er den LW-Modus an der Body-Cam einschalten.
+Je nach Gefahreneinstufung muss diese Aktivierung durch einen Operator im Überwachungszentrum bestätigt werden.
+Im aktivierten LW-Modus kann sich der Alleinarbeiter auf eine durchgehende Verbindung verlassen.
+Bei Störung der ununterbrochenen Kommunikation zum Überwachungszentrum wird der Arbeiter über die Body-Cam informiert.
 \\
 
-Der „Lone Worker“ als Träger der Body-Cam soll durch den Modus seine Aufgaben besser und mit einer größeren Sicherheit erledigen können.
-%%
-Darunter zählen zum Beispiel die Überwachung und/oder Sicherung eines Bereiches, Kontrollgänge durch ein Gebäude oder
-als Sicherheitspersonal in Einkaufszentren, Bahn, Schule und vielem mehr.
-%%
-Der Träger soll die Sicherheit haben durch die BC mit dem LW-Modus unter einer ununterbrochenen Überwachung zustehen,
-die im Notfall schnell auf Gefahrensituationen reagieren kann.
-%%
+Im Gefahrenfall kann der Lone-Worker einen Alarm auslösen, beispielsweise durch Betätigen des roten Knopfes.
+Dieser wird an das Überwachungszentrum übermittelt.
+Dort wird der Alarm entweder direkt zu einer Notrufzentrale, mit allen verfügbaren Informationen, weitergeleitet oder zum Operator durchgestellt.
+Der Operator nimmt dann umgehend Kontakt zum Lone-Worker auf.
+Dies geschieht durch den Zwei-Wege-Audiokanal und durch die von der Body-Cam zur Verfügung gestellten Livestreams.
+Bei Bedarf kann der Operator alle nötigen Schritte zur Rettung des Alleinarbeiters einleiten.
 \\
 
-Das Überwachungszentrum dient als Leitstelle wohin sich mehrere BC verbinden können.
-%%
-Je nach zur Verfügung stehenden Kapazitäten können dann strengere Überwachungen mit eingeschaltetem LW-Modus durchgeführt werden.
-%%
-Den Aufbau und Abbau von Verbindungen sowie das Anfordern und Darstellen von Informationen über die einzelnen BCs wird
+Das Überwachungszentrum dient als Leitstelle, zu welchem sich mehrere Geräte verbinden können.
+Je nach zur Verfügung stehenden Kapazitäten (Operatoren) können strengere Überwachungen mit eingeschaltetem LW-Modus durchgeführt werden.
+Den Aufbau und Abbau von Verbindungen sowie das Anfordern und Darstellen von Informationen über die einzelnen Body-Cams wird
 durch einen Automatismus realisiert.
-%%
-Die Bestätigung des LW-Modus mit Übergang in die ununterbrochene Überwachung muss jedoch aktiv durch einen Mitarbeiter des MC stattfinden. (Ergänzen warum das gemacht werden muss oder ändern)
 \\
 
-\subsection{Use-Cases}
+\section{Use-Cases}
 \section{Anforderungen des Gesamtsystems}
 Aus den Punkten des Lastenheftes (ändern da kein Lastenheft als direkte Quelle existiert) lassen sich folgende Anforderungen für das Gesamtsystem herausarbeiten.
 \\

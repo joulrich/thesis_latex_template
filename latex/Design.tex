@@ -99,7 +99,7 @@ Unter diese Events zählen beispielsweise Alarmauslösung, Ein- oder Austritt au
 Außerdem wird das Display dafür genutzt alle möglichen Statusinformationen über das Gerät anzuzeigen, wie Akkustand, Mobilfunkstärke oder Temperatur.
 \\
 
-\section{Protokolldesign}
+\section{Protokolldesign}\label{chap:protokolldesign}
 Damit alle Anforderungen an die Kommunikation zwischen BC und MC erfüllt werden können, wird ein eigenes Protokoll verwendet.
 %%
 Dieses wird in der einheitlichen und weit verbreiteten „JavaScript Object Notation“ (JSON) verfasst.
@@ -108,8 +108,6 @@ Dieser Standard hat für die Anwendung folgende Vorteile.
 %%
 Das Protokoll kann einfach zwischen Client und Server übertragen werden, da JSON sehr einfach in einen String umgewandelt werden kann.
 %%
-\\
-
 Es existieren bereits in sehr vielen Programmiersprachen Bibliotheken die JSON verstehen, bearbeiten und umwandeln können,
 sodass Nachrichten schnell zwischen verschiedenen Anwendungen konvertiert werden können, wenn dies benötigt wird.
 %%
@@ -153,7 +151,7 @@ Durch den Aufbau der JSON kann das Datenfeld bei Bedarf ebenfalls strukturiert w
 
 (TODO: Quellen für Vorteile bzw. zum Aufbau von JSON finden)
 
-\section{Primitiven}
+\section{Primitiven}\label{chap:primitiven}
 Im folgenden Kapitel werden alle Primitiven aufgeführt und beschrieben.
 %%
 Das sind alle Informationen, die der LW-Modus von der BC braucht, um die vollständige Funktion zu gewährleisten

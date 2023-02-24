@@ -6,8 +6,7 @@
 
 Nach der Planungs- und Designphase wird nun die Realisierung des Projekts behandelt. Im Detail, die Realisierung des Prototyps, der eine einfache Verbindung zwischen Client und Server ermöglicht sowie die Stabilität sicherstellt.
 
-\section{Vorbereitung}
-\subsection{Technologien und technische Grundlagen}\label{chap:technologien}
+\section{Technologien und technische Grundlagen}\label{chap:technologien}
 
 Das neue Lone-Worker Feature der Body-Cam erfordert eine dauerhafte, bidirektionale Verbindung zwischen Body-Cam als Client und Überwachungszentrum als Server.
 Die Kommunikation soll dabei in Echtzeit ablaufen.
@@ -81,8 +80,7 @@ Für das Lone-Worker Feature sind sie also wichtig, um dauerhaft eine Verbindung
 \textcolor{red}{QUELLE suchen}.
 \\
 
-\section{Implementierung}
-\subsection{Entwicklungsprozess}
+\section{Entwicklungsprozess}
 
 Für die Umsetzung und Implementierung den Prototypen wurde ein agiler Entwicklungsprozess genutzt.
 Dafür wurden kontinuierliche Iterationen über alle Phasen des Projekts verwendet.
@@ -100,7 +98,7 @@ Einzelheiten zur konkreten Umsetzung folgen im nächsten Kapitel.
 
 Zur Entwicklung des Prototyps kam die Programmiersprache C++ sowie ein Linux Ubuntu 20.04 LTS zum Einsatz.
 Auf diesem wurden dann alle nötigen Bibliotheken gebaut und mithilfe von CMake eine Projektstruktur entworfen.
-Die wichtigsten Bibliotheken sind die Boost-Sammlung, insbesondere Boost-Beast und Boost-Asio für die WebSockets-Verbindung sowie die rapidjson Bibliothek als JSON-Parser.
+Die wichtigsten Bibliotheken sind die Boost-Sammlung, insbesondere Boost-Beast und Boost-Asio für die WebSockets-Verbindung sowie die \glqq rapidjson\grqq{} Bibliothek als JSON-Parser.
 CMake kümmert sich außerdem im Prozess des Compiling und Linking um die Verwaltung und Übersetzung der verschiedenen Quelldateien
 sowie die Einbindung und Verknüpfung der Header und Bibliotheken.
 Dabei wurde der Compiler G++ in der Version 9.4.0 genutzt.
@@ -108,7 +106,7 @@ Als Programmiereditor wurde Visual Studio Code mit der Erweiterung \glqq clangd\
 Zur Versionsverwaltung wurde Git genutzt, mit einem eigenen Repository auf GitHub.
 \\
 
-\subsection{Umsetzung}
+\section{Implementierung}
 
 statemaschine vllt hier her und nicht in design teil ?
 
@@ -116,7 +114,7 @@ Im praktischen Teil der Bachelorarbeit wurde der Prototyp einer Client-Server-Ve
 Das Hauptaugenmerk lag dabei auf der Umsetzung der Client-Seite.
 Konkret wurde eine Kommunikationsbibliothek programmiert, die später in den Code der vorhanden Body-Cam eingebunden werden kann.
 Sie erweitert die bestehende Implementierung um das Lone-Worker Feature.
-Über die in \autoref{chap:Primitiven} beschriebenen Schnittstellen kann die Body-Cam den neuen Lone-Worker-Modus ansteuern.
+Über die in \autoref{chap:primitiven} beschriebenen Schnittstellen kann die Body-Cam den neuen Lone-Worker-Modus ansteuern.
 \\
 
 Der Client befindet sich auf der Body-Cam.
@@ -138,8 +136,8 @@ Diese Meldung ist der spätere Alarm, den die beiden Seiten bei einem Verbindung
 Der Verbindungsaufbau erfolgt über das Websocket-Protokoll.
 Die Websocket-Verbindung wird über ein Handshaking-Verfahren aufgebaut.
 Dafür werden die asynchronen Methoden aus der Boost-Beast-Bibliothek verwendet.
-Als Erstes wird mit einem \glqq async_resolve\grqq{} sowie der URL und dem Port die IP-Adresse des Servers ermittelt.
-Danach wird mit einem \glqq async_connect\grqq{} die Verbindung aufgebaut und über die Methode \glqq async_handshake\grqq{} das Handshake-Verfahren durchgeführt.
+Als Erstes wird mit einem \glqq async\underline{ }resolve\grqq{} sowie der URL und dem Port die IP-Adresse des Servers ermittelt.
+Danach wird mit einem \glqq async\underline{ }connect\grqq{} die Verbindung aufgebaut und über die Methode \glqq async\underline{ }handshake\grqq{} das Handshake-Verfahren durchgeführt.
 Nach dieser Prozedur können Server und Client über asynchrone Lese- und Schreibmethoden Nachrichten austauschen.
 Im Fehlerfall, wenn beispielsweise der Server nicht erreichbar ist oder das Handshaking-Verfahren fehlschlägt wird die Verbindung beendet.
 Das Verbindungsobjekt wird verworfen und nach einer kurzen Verzögerung wird ein erneuter Verbindungsversuch gestartet.
@@ -154,24 +152,38 @@ Der Server-Timer wird ebenfalls neu gestartet, wenn der Server die Antwort regis
 Mit diesem Vorgehen soll sichergestellt werden, dass ein Verbindungsverlust rechtzeitig erkannt wird und eine schnelle Wiederherstellung der Verbindung vorgenommen werden kann.
 Im Fall eines detektierten Verlustes wird nach dem gleichen Prinzip vorgegangen wie bei einem Fehlerfall im Verbindungsaufbau.
 Das gewährleistet einen sauberen Wiederaufbau ohne mögliche Artefakte aus älteren Verbindungen.
+\\
 
+%Nachrichten klasse zeigen
+Die komplette Kommunikation zwischen dem Lone-Worker-Feature der Body-Cam und dem Überwachungszentrum findet über das in \autoref{chap:protokolldesign} beschriebene Protokoll statt.
+Dabei wird auf beiden Seiten jede Nachricht mit einer eindeutigen Nummer versehen.
+Diese ermöglicht es die Nachrichten zu verfolgen und gezielte Antworten auf Anfragen zu erzeugen.
+Durch den einfachen strukturierten Aufbau des Protokolls im JSON-Format, kann es sowohl für die wenigen Funktionen des Prototyps verwendet werden, als auch für alle späteren Funktionen des Lone-Worker-Modus sehr leicht angepasst werden.
+Die oben gezeigte Nachrichtenklasse lässt sich mit wenig Arbeit so erweitern, dass verschiedene Statusinformationen oder Anfragen zur Bereitstellung der Streams problemlos vom Client bereitgestellt werden können.
+\\
 
-Verbindungswiederherstellung: Gehe darauf ein, wie dein Programm die Verbindung zwischen Client und Server wiederherstellt, falls die Verbindung abbricht oder verloren geht. Beschreibe dabei auch, welche Strategien und Technologien du für die Wiederherstellung der Verbindung einsetzt.
+% Weitere wichtige Codestellen zum beschreiben finden?
 
-Nachrichtenaustausch erklären Protokoll und so
+Aufgrund der begrenzten Ressourcen die ein Embedded-Gerät wie die Body-Cam zur Verfügung hat sowie die Anforderung an das Überwachungszentrum mehrere Clients gleichzeitig zu verwalten, müssen Performance und Skalierbarkeit berücksichtigt werden.
+Aus diesem Grund wurden bereits während der Designphase Entscheidungen getroffen die in den Prototypen einfließen.
+Darunter fallen:
+\begin{itemize}
+    \item Verwendung von C++ als performante und effiziente Sprache
+    \item Einsatz von wenigen und schnellen Bibliotheken wie \glqq rapidjson\grqq{}
+    \item Gebrauch des WebSocket-Protokolles
+    \item Nutzung der asynchronen gegenüber der synchronen Kommunikation
+\end{itemize}
 
-Code: Beschreibe den Code, den du für dein Programm geschrieben hast. Hier solltest du auf wichtige Codeabschnitte und -funktionen eingehen und erläutern, wie sie funktionieren.
+Diese Maßnahmen verbessern die Performance und Skalierbarkeit von Client und Server führen jedoch zu einem höheren Programmieraufwand.
+Speziell der Einsatz des asynchronen Konzepts erforderte ein hohes Maß an Einarbeitungszeit sowie eine gesteigerte Fehlerquote.
+Durch die Komplexität des nicht-linearen Programmablaufs gestaltet sich das Debugging als anspruchsvolle Aufgabe, welches aufwendigere Maßnahmen zur Fehlerbehebung erforderlich machte.
+\\
+% hier vllt. ein Vermerk auf einen Text im Anhang machen der genauere Probleme zeigte ehemalige Herausforderungen
 
-Tests: Erkläre, wie du dein Programm getestet hast und welche Testfälle du verwendet hast. Beschreibe dabei auch, wie du sicherstellst, dass dein Programm robust und fehlertolerant ist.
-
-Performance: Gehe darauf ein, wie gut dein Programm in Bezug auf Performance und Skalierbarkeit abschneidet. Beschreibe dabei auch, welche Maßnahmen du ergriffen hast, um die Performance deines Programms zu verbessern.
-
-
-
-\subsection{Herausforderungen bei der Implementierung}
+\section{Testprotokoll}
 \section{Ergebnisse}
-\subsection{Testprotokoll}
-\subsection{Erfüllung der Anforderungen}
+
+
 
 \subfilebib % Makes bibliography available when compiling as subfile
 \end{document}
