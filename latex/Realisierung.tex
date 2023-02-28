@@ -19,14 +19,12 @@ Darüber hinaus unterstützen WebSockets auch bidirektionale Kommunikation.
 Das bedeutet, dass sowohl der Client als auch der Server Daten senden und empfangen können.
 Dies ist ideal für Anwendungen wie Multiplayer-Spiele, Chat-Anwendungen oder Echtzeit-Kommunikation, bei denen schnelle und zuverlässige Kommunikation zwischen dem Client und dem Server von entscheidender Bedeutung ist.
 Ein weiterer Vorteil von WebSockets ist, dass sie von vielen modernen Browsern und Webanwendungen nativ unterstützt werden.
-Dadurch wird die Implementierung der Client-Seite erleichtert, da Sie sich nicht um die Verwaltung von Verbindungs- oder Datenübertragungsdetails kümmern müssen. \cite[vgl. S.4f]{WebsocketProtokoll}
-\\
+Dadurch wird die Implementierung der Client-Seite erleichtert, welche sich nicht um die Verwaltung von Verbindungs- oder Datenübertragungsdetails kümmern muss. \cite[vgl. S.4f]{WebsocketProtokoll}
 
 Für die Sicherheit des Lone-Worker ist eine stabile und dauerhafte Verbindung zum Überwachungszentrum von großer Bedeutung.
 Es muss ein Verbindungsabbruch schnell festgestellt werden sowie eine Vielzahl von Anfragen bearbeitet werden, um aktuelle Informationen jederzeit bereitzustellen.
 Ein Überwachungszentrum ist potenziell mit mehreren Clients verbunden, sodass hier eine effiziente Ressourcennutzung wichtig ist.
 Um diesen Anforderungen gerecht zu werden, wurde als Grundgerüst der Kommunikation das Websocket-Protokoll gewählt.
-\\
 
 Bei der Kommunikation zwischen Client und Server kann man zwischen zwei Arten unterscheiden.
 Der synchronen und der asynchronen Kommunikation.
@@ -34,21 +32,19 @@ Synchron bedeutet, dass der Sender auf eine Antwort des Empfängers wartet, bevo
 Mit anderen Worten, der Sender blockiert den Prozess, bis der Empfänger bestätigt hat, dass er die Daten empfangen hat und bereit ist, weitere Daten zu akzeptieren.
 Im Gegensatz dazu bedeutet asynchron, dass der Sender die Daten ohne Bestätigung sendet und der Empfänger die Daten empfängt, wenn sie verfügbar sind, ohne auf eine explizite Bestätigung des Senders zu warten.
 Das heißt, der Empfänger blockiert nicht den Prozess und akzeptiert Daten, sobald sie eintreffen.
-\\
+% reicht ZItat unten oder an jeden Absatz
 
 Synchron und asynchron sind zwei grundlegende Arten der Kommunikation in der Netzwerkprogrammierung.
 Synchron bedeutet, dass die Kommunikation zwischen Client und Server blockierend ist, das heißt, der Client wartet auf eine Antwort vom Server, bevor er mit der Ausführung seines Codes fortfahren kann.
 Asynchron bedeutet hingegen, dass die Kommunikation nicht blockierend ist, das heißt, der Client kann seine Arbeit fortsetzen, während er auf eine Antwort vom Server wartet.
-\\
 
 In einer synchronen Kommunikation sendet der Client eine Anfrage an den Server und wartet, bis der Server eine Antwort zurücksendet.
 Der Client blockiert in dieser Zeit und kann nicht auf andere Anfragen oder Ereignisse reagieren.
 Wenn der Server lange braucht, um auf die Anfrage zu antworten oder eine Fehlermeldung zurückgibt, blockiert der Client weiterhin.
 In einer asynchronen Kommunikation sendet der Client eine Anfrage an den Server und setzt seine Arbeit fort, während er auf die Antwort wartet.
 Der Client kann mehrere Anfragen gleichzeitig senden und auf die Antworten warten, wenn sie verfügbar sind.
-Bei längeren Antwortzeiten oder einer Fehlermeldung kann der Client weiterhin arbeiten und auf andere Ereignisse reagieren.
-\cite[vgl. S.1-3]{lim2019directly}
-\\
+Bei längeren Antwortzeiten oder einer Fehlermeldung kann der Client weiterhin arbeiten und auf andere Ereignisse reagieren
+\cite[vgl. S.1-3]{lim2019directly}.
 
 Aufgrund der begrenzten Ressourcen der Body-Cam als Embedded-Gerät sowie der Möglichkeit, das sich mehrere Clients mit dem Überwachungszentrum verbinden können, wird die asynchrone Kommunikation verwendet.
 Diese bietet mehrere Vorteile, wie Skalierbarkeit, Effizienz, Robustheit und Flexibilität.
@@ -58,14 +54,12 @@ Damit kann er mehrere Anfragen gleichzeitig versenden und auf die Antworten reag
 Das steigert die Effizienz auf beiden Seiten der Verbindung.
 Im Fehlerfall kann der Client weiterarbeiten und wird nicht durch einen Serverfehler blockiert.
 Außerdem ist es damit auch Möglichkeit das Daten gesendet werden können, ohne eine direkte Antwort zu erwarten.
-Das ist beispielsweise von Vorteil bei der Implementierung eines Heartbeat zwischen Client und Server.
-(vgl. \cite[]{whyAsync} und \cite[]{thinkAsync})
-\\
+Das ist beispielsweise von Vorteil bei der Implementierung eines Heartbeat zwischen Client und Server
+(vgl. \cite[]{whyAsync} und \cite[]{thinkAsync}).
 
-Für eine dauerhafte und zuverlässige Verbindung zwischen Body-Cam und Überwachungszentrum wird ein Mechanismus benötigt der einen Verbindungsabbruch in kurzer Zeit feststellt.
+Für eine dauerhafte und zuverlässige Verbindung zwischen Body-Cam und Überwachungszentrum wird ein Mechanismus benötigt, der einen Verbindungsabbruch in kurzer Zeit feststellt.
 Diese Möglichkeit wird von Mobilfunk oder WLAN nativ nicht zur Verfügung gestellt.
 Aus diesem Grund wurde für die Kommunikation im Prototypen ein Heartbeat-Mechanismus implementiert.
-\\
 
 Heartbeats sind spezielle Signale, die in der Regel zwischen Client- und Server-Anwendungen ausgetauscht werden.
 Sie stellen sicher, dass die Verbindung zwischen den beiden Parteien aktiv und stabil bleibt.
@@ -78,23 +72,21 @@ Ebenfalls kann dadurch bei Netzwerkproblemen schnell festgestellt werden das die
 Sie tragen damit dazu bei, dass die Verbindung bei Bedarf automatisch wiederhergestellt wird und die Zuverlässigkeit erhöht wird.
 Für das Lone-Worker Feature sind sie also wichtig, um dauerhaft eine Verbindung zwischen Client und Server aufrechtzuerhalten und ermöglichen dadurch eine effiziente und zuverlässige Kommunikation zwischen den beiden Parteien.
 \textcolor{red}{QUELLE suchen}.
-\\
 
 \section{Entwicklungsprozess}
 
 Für die Umsetzung und Implementierung den Prototypen wurde ein agiler Entwicklungsprozess genutzt.
 Dafür wurden kontinuierliche Iterationen über alle Phasen des Projekts verwendet.
-Als ersteres wurde überlegt wie die bestehende Body-Cam an die Aufgabe der Überwachung bei Alleinarbeit angepasst werden kann.
+Als Erstes wurde überlegt, wie die bestehende Body-Cam an die Aufgabe der Überwachung bei Alleinarbeit angepasst werden kann.
 Diese Anpassungen wurden als Anforderungen aufgeschrieben und in mehreren Iterationen weiter ausgeführt und verbessert.
 Anschließend wurden konkrete Funktionen herausgearbeitet, die durch den neuen Lone-Worker-Modus abgedeckt werden sollen.
-Es wurden verschiedene Statemachines entwickelt die einen ersten Programmablauf beschreiben.
-Dieser ging über Verbindungsaufbau, -abbau und -wiederherstellung, den Umgang mit Ein- und Ausgeheden Nachrichten sowie der Einbindung in die bereits bestehende Body-Cam Implementierung.
-Danach wurden das Protokoll für die Kommunikation zwischen Gerät und Überwachungszentrum sowie die Primitiven zwischen Body-Cam und Lone-Worker-Modus herausgearbeitet.
+Es wurden verschiedene Statemachines entwickelt, die einen ersten Programmablauf beschreiben.
+Dieser ging über Verbindungsaufbau, -abbau und -wiederherstellung, den Umgang mit ein- und ausgeheden Nachrichten sowie der Einbindung in die bereits bestehende Body-Cam Implementierung.
+Danach wurde das Protokoll für die Kommunikation zwischen Gerät und Überwachungszentrum sowie die Primitiven zwischen Body-Cam und Lone-Worker-Modus herausgearbeitet.
 Nach der Designphase begann die Implementierung.
 Hier wurde sich als Erstes anhand der Anforderungen und gegebenen Technologien der bestehenden Implementierung für die Technologien aus Kapitel \autoref{chap:technologien} entschieden.
 Außerdem wurde im Rahmen der Arbeit die Implementierung des Lone-Worker-Modus auf die Grundfunktionalität des Verbindungsaufbaus, -abbaus und -wiederherstellung begrenzt.
 Einzelheiten zur konkreten Umsetzung folgen im nächsten Kapitel.
-\\
 
 Zur Entwicklung des Prototyps kam die Programmiersprache C++ sowie ein Linux Ubuntu 20.04 LTS zum Einsatz.
 Auf diesem wurden dann alle nötigen Bibliotheken gebaut und mithilfe von CMake eine Projektstruktur entworfen.
@@ -104,7 +96,6 @@ sowie die Einbindung und Verknüpfung der Header und Bibliotheken.
 Dabei wurde der Compiler G++ in der Version 9.4.0 genutzt.
 Als Programmiereditor wurde Visual Studio Code mit der Erweiterung \glqq clangd\grqq{} verwendet.
 Zur Versionsverwaltung wurde Git genutzt, mit einem eigenen Repository auf GitHub.
-\\
 
 \section{Implementierung}
 
@@ -115,9 +106,8 @@ Das Hauptaugenmerk lag dabei auf der Umsetzung der Client-Seite.
 Konkret wurde eine Kommunikationsbibliothek programmiert, die später in den Code der vorhanden Body-Cam eingebunden werden kann.
 Sie erweitert die bestehende Implementierung um das Lone-Worker Feature.
 Über die in \autoref{chap:primitiven} beschriebenen Schnittstellen kann die Body-Cam den neuen Lone-Worker-Modus ansteuern.
-\\
 
-Der Client befindet sich auf der Body-Cam.
+Die Body-Cam fungiert als Client.
 Sobald der Träger die Kamera einschaltet versucht sie sich mit dem Überwachungszentrum zu verbinden, welches vorher konfiguriert worden ist.
 Die Aufgaben des Clients beinhalten:
 \begin{itemize}
@@ -131,7 +121,6 @@ Das Überwachungszentrum repräsentiert die Server-Seite.
 Sie wartet auf eingehende Verbindungen von Body-Cams und schickt nach dem Verbindungsaufbau in regelmäßigen Abständen Anfragen oder Heartbeats an den Client.
 Im Fall das die beiden Seiten nach einer konfigurierbaren Zeitspanne keine neuen Nachrichten von der Gegenseite feststellen, wird eine Fehlermeldung ausgegeben.
 Diese Meldung ist der spätere Alarm, den die beiden Seiten bei einem Verbindungsausfall bekommen.
-\\
 
 Der Verbindungsaufbau erfolgt über das Websocket-Protokoll.
 Die Websocket-Verbindung wird über ein Handshaking-Verfahren aufgebaut.
@@ -142,17 +131,15 @@ Nach dieser Prozedur können Server und Client über asynchrone Lese- und Schrei
 Im Fehlerfall, wenn beispielsweise der Server nicht erreichbar ist oder das Handshaking-Verfahren fehlschlägt wird die Verbindung beendet.
 Das Verbindungsobjekt wird verworfen und nach einer kurzen Verzögerung wird ein erneuter Verbindungsversuch gestartet.
 Es kommt zum Alarmfall, wenn keine vollständige Verbindung in einer vorher festgelegten Zeit hergestellt werden kann.
-\\
 
 Nachdem eine vollständige Verbindung zwischen Client und Server hergestellt ist, werden vom Server regelmäßig Telegramme an den Client versendet.
-Diese Nachrichten sind entweder Anfragen nach beispielsweise Statusinformationen, Standortdaten und Streams oder Heartbeats.
+Diese Nachrichten sind entweder Anfragen auf beispielsweise Statusinformationen, Standortdaten und Streams oder Heartbeats.
 Beim Empfangen einer Nachricht auf Client-Seite wird der Timer, der einen Verbindungsverlust feststellt zurückgesetzt.
 Anschließend beantwortet der Client das Telegram.
 Der Server-Timer wird ebenfalls neu gestartet, wenn der Server die Antwort registriert.
 Mit diesem Vorgehen soll sichergestellt werden, dass ein Verbindungsverlust rechtzeitig erkannt wird und eine schnelle Wiederherstellung der Verbindung vorgenommen werden kann.
 Im Fall eines detektierten Verlustes wird nach dem gleichen Prinzip vorgegangen wie bei einem Fehlerfall im Verbindungsaufbau.
 Das gewährleistet einen sauberen Wiederaufbau ohne mögliche Artefakte aus älteren Verbindungen.
-\\
 
 %Nachrichten klasse zeigen
 Die komplette Kommunikation zwischen dem Lone-Worker-Feature der Body-Cam und dem Überwachungszentrum findet über das in \autoref{chap:protokolldesign} beschriebene Protokoll statt.
@@ -160,12 +147,11 @@ Dabei wird auf beiden Seiten jede Nachricht mit einer eindeutigen Nummer versehe
 Diese ermöglicht es die Nachrichten zu verfolgen und gezielte Antworten auf Anfragen zu erzeugen.
 Durch den einfachen strukturierten Aufbau des Protokolls im JSON-Format, kann es sowohl für die wenigen Funktionen des Prototyps verwendet werden, als auch für alle späteren Funktionen des Lone-Worker-Modus sehr leicht angepasst werden.
 Die oben gezeigte Nachrichtenklasse lässt sich mit wenig Arbeit so erweitern, dass verschiedene Statusinformationen oder Anfragen zur Bereitstellung der Streams problemlos vom Client bereitgestellt werden können.
-\\
 
 % Weitere wichtige Codestellen zum beschreiben finden?
 
-Aufgrund der begrenzten Ressourcen die ein Embedded-Gerät wie die Body-Cam zur Verfügung hat sowie die Anforderung an das Überwachungszentrum mehrere Clients gleichzeitig zu verwalten, müssen Performance und Skalierbarkeit berücksichtigt werden.
-Aus diesem Grund wurden bereits während der Designphase Entscheidungen getroffen die in den Prototypen einfließen.
+Aufgrund der begrenzten Ressourcen, die ein Embedded-Gerät wie die Body-Cam zur Verfügung hat sowie die Anforderung an das Überwachungszentrum mehrere Clients gleichzeitig zu verwalten, müssen Performance und Skalierbarkeit berücksichtigt werden.
+Aus diesem Grund wurden bereits während der Designphase Entscheidungen getroffen, die in den Prototypen einfließen.
 Darunter fallen:
 \begin{itemize}
     \item Verwendung von C++ als performante und effiziente Sprache
@@ -177,7 +163,6 @@ Darunter fallen:
 Diese Maßnahmen verbessern die Performance und Skalierbarkeit von Client und Server führen jedoch zu einem höheren Programmieraufwand.
 Speziell der Einsatz des asynchronen Konzepts erforderte ein hohes Maß an Einarbeitungszeit sowie eine gesteigerte Fehlerquote.
 Durch die Komplexität des nicht-linearen Programmablaufs gestaltet sich das Debugging als anspruchsvolle Aufgabe, welches aufwendigere Maßnahmen zur Fehlerbehebung erforderlich machte.
-\\
 % hier vllt. ein Vermerk auf einen Text im Anhang machen der genauere Probleme zeigte ehemalige Herausforderungen
 
 \section{Testprotokoll}
@@ -186,7 +171,6 @@ Im Kontext der vorliegenden Arbeit sowie der Anforderungen, die an ein PNA durch
 Der Verbindungsaufbau und -abbau sowie die saubere Wiederherstellung der Verbindung im Fehlerfall repräsentieren das Kernstück des Lone-Worker-Modus.
 Der im praktischen Teil der Arbeit entwickelte Prototyp implementiert diese Kernelemente.
 Aus diesem Grund soll durch ein Testprotokoll sichergestellt werden, dass der Anspruch an eine PNA für Alleinarbeit erfüllt wird.
-\\
 
 Im Anhang \textcolor{red}{xyz} befindet sich die Ausarbeitung eines für den Prototyp entwickeltes Testprotokoll.
 Es beschreibt verschiedene Testfälle mit den erforderlichen Voraussetzungen und Schritten sowie dem erwartenden Ergebnis.
@@ -197,7 +181,6 @@ Im erfolgreichen Fall kann die Verbindung nach kurzer Zeit reaktiviert werden un
 Beim Eintritt eines Alarmfalls konnte keine Verbindung zwischen Body-Cam und Überwachungszentrum in der definierten Zeit hergestellt werden.
 Die Wiederherstellung ist fehlgeschlagen und beide Seiten haben dies detektiert und teilen dies im Prototyp durch die Programmausgabe mit.
 Im späteren Szenarios wird diese Detektion an den Lone-Worker und den Operator weitergeleitet, damit diese über die unterbrochene Überwachung informiert sind.
-\\
 
 Jeder Testfall wurde mit dem implementierten Prototyp vollzogen und die Ergebnisse unter jedem Testfall notiert.
 
