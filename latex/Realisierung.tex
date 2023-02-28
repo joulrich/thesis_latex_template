@@ -181,6 +181,26 @@ Durch die Komplexität des nicht-linearen Programmablaufs gestaltet sich das Deb
 % hier vllt. ein Vermerk auf einen Text im Anhang machen der genauere Probleme zeigte ehemalige Herausforderungen
 
 \section{Testprotokoll}
+
+Im Kontext der vorliegenden Arbeit sowie der Anforderungen, die an ein PNA durch die DGUV gestellt werden, hat sich herausgestellt das die Stabilität und Zuverlässigkeit einen wesentlichen Bestandteil bilden.
+Der Verbindungsaufbau und -abbau sowie die saubere Wiederherstellung der Verbindung im Fehlerfall repräsentieren das Kernstück des Lone-Worker-Modus.
+Der im praktischen Teil der Arbeit entwickelte Prototyp implementiert diese Kernelemente.
+Aus diesem Grund soll durch ein Testprotokoll sichergestellt werden, dass der Anspruch an eine PNA für Alleinarbeit erfüllt wird.
+\\
+
+Im Anhang \textcolor{red}{xyz} befindet sich die Ausarbeitung eines für den Prototyp entwickeltes Testprotokoll.
+Es beschreibt verschiedene Testfälle mit den erforderlichen Voraussetzungen und Schritten sowie dem erwartenden Ergebnis.
+Die Testfälle beziehen sich auf die Kernelemente des Prototyps und umfassen den Verbindungsaufbau zwischen Client und Server,
+den Austausch von Heartbeats über das JSON-Protokoll sowie die Verbindungswiederherstellung.
+Bei letzterem Testfall gibt es eine Unterscheidung zwischen erfolgreicher und fehlerhafter Wiederherstellung.
+Im erfolgreichen Fall kann die Verbindung nach kurzer Zeit reaktiviert werden und die dauerhafte Überwachung ist weiterhin gewährleistet.
+Beim Eintritt eines Alarmfalls konnte keine Verbindung zwischen Body-Cam und Überwachungszentrum in der definierten Zeit hergestellt werden.
+Die Wiederherstellung ist fehlgeschlagen und beide Seiten haben dies detektiert und teilen dies im Prototyp durch die Programmausgabe mit.
+Im späteren Szenarios wird diese Detektion an den Lone-Worker und den Operator weitergeleitet, damit diese über die unterbrochene Überwachung informiert sind.
+\\
+
+Jeder Testfall wurde mit dem implementierten Prototyp vollzogen und die Ergebnisse unter jedem Testfall notiert.
+
 \section{Ergebnisse}
 
 
