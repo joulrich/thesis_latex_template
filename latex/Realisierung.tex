@@ -55,7 +55,7 @@ Das steigert die Effizienz auf beiden Seiten der Verbindung.
 Im Fehlerfall kann der Client weiterarbeiten und wird nicht durch einen Serverfehler blockiert.
 Außerdem ist es damit auch Möglichkeit das Daten gesendet werden können, ohne eine direkte Antwort zu erwarten.
 Das ist beispielsweise von Vorteil bei der Implementierung eines Heartbeat zwischen Client und Server
-(vgl. \cite[]{whyAsync} und \cite[]{thinkAsync}).
+\cite[vgl.]{whyAsync,thinkAsync}.
 
 Für eine dauerhafte und zuverlässige Verbindung zwischen Body-Cam und Überwachungszentrum wird ein Mechanismus benötigt, der einen Verbindungsabbruch in kurzer Zeit feststellt.
 Diese Möglichkeit wird von Mobilfunk oder WLAN nativ nicht zur Verfügung gestellt.
@@ -172,7 +172,7 @@ Der Verbindungsaufbau und -abbau sowie die saubere Wiederherstellung der Verbind
 Der im praktischen Teil der Arbeit entwickelte Prototyp implementiert diese Kernelemente.
 Aus diesem Grund soll durch ein Testprotokoll sichergestellt werden, dass der Anspruch an eine PNA für Alleinarbeit erfüllt wird.
 
-Im Anhang \textcolor{red}{xyz} befindet sich die Ausarbeitung eines für den Prototyp entwickeltes Testprotokoll.
+Im \autoref{anhang:testprotokoll} befindet sich die Ausarbeitung eines für den Prototyp entwickeltes Testprotokoll.
 Es beschreibt verschiedene Testfälle mit den erforderlichen Voraussetzungen und Schritten sowie dem erwartenden Ergebnis.
 Die Testfälle beziehen sich auf die Kernelemente des Prototyps und umfassen den Verbindungsaufbau zwischen Client und Server,
 den Austausch von Heartbeats über das JSON-Protokoll sowie die Verbindungswiederherstellung.

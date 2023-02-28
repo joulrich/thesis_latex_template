@@ -22,9 +22,14 @@ Dies soll sicherstellen, dass in einem Notfall der Alleinarbeiter so schnell wie
 Die Notrufmöglichkeiten sind ein wichtiger Teil der Rettungskette.
 Die Notwendigkeit verschiedenen Möglichkeiten zur Gefahrenminimierung werden durch die Gefährdungsstufen, Erstversorgungszeit und die Notfallwahrscheinlichkeit festgelegt \cite[vgl. S.13-18]{Regel_112-139}.
 
-DGUV Information 212-139 ABB 1 !! Passt hier denke sehr gut hin.
+\begin{figure}[h]
+    \centering
+    \includegraphics[height=0.7\textwidth]{/Alleinarbeit_Maßnahmen.png}
+    \caption{Mögliche Maßnahmen bei Alleinarbeit nach \cite[]{Information_212-139}}
+    \label{fig:alleinarbeit_beurteilung}
+\end{figure}
 
-Wie in der \textcolor{red}{Abbildung} ersichtlich wird, kann bei Alleinarbeit die Gefährdung in drei verschiedene Stufen eingeteilt werden.
+Wie in der \autoref{fig:alleinarbeit_beurteilung} ersichtlich wird, kann bei Alleinarbeit die Gefährdung in drei verschiedene Stufen eingeteilt werden.
 Geringe Gefährdung heißt dabei, dass die allein arbeitende Person sich nach einem schädlichen Ereignis nur geringe Verletzungen zuziehen wird bzw. nur eine geringe akute Beeinträchtigung der Gesundheit verursacht wird.
 Die Person bleibt also nach einem Unfall noch voll handlungsfähig.
 Wie der Grafik zu entnehmen ist, ist dies der einfachste Fall.
@@ -76,10 +81,22 @@ Unter Alarmparameter fallen beispielsweise professionelle Alarmbearbeitung durch
 Alle Bauanforderungen und Funktionen die eine PNA erfüllen muss sind in der DGUV Regel 112-139 \cite[]{Regel_112-139} beschrieben.
 Diese beruht auf der Norm "DIN VDE V 0825-11: Geräte- und Prüfanforderungen für Personen-Notsignal-Anlagen unter Nutzung öffentlicher Telekommunikationsnetze".
 Die als Gegenstand dieser Arbeit vorgestellte Body-Cam ist in die Kategorie PNA einzuordnen.
-Genauere Details der einzelnen Funktionen werden in Kapitel \textcolor{red}{xxx} beschrieben.
-\\
+Genauere Details der einzelnen Funktionen werden in \autoref{chap:funktionen} beschrieben.
 
 \section{IST-Zustand Body-Cam}
+
+\begin{figure}[h]
+    \centering
+    \subfloat[][]{
+        \includegraphics[height=0.50\textwidth]{/BC_side_dock.png}
+        }
+    \qquad
+    \subfloat[][]{
+        \includegraphics[height=0.50\textwidth]{/BC_front_dock.png}
+        }
+    \caption{Body-Cam in einer Dockingstation}
+    \label{fig:BC_dock}
+\end{figure}
 
 Die Body-Cam ist das Hauptprodukt von NetCo und wurde 2016 entwickelt. Mittlerweile kommt sie europaweit erfolgreich zum Einsatz.
 In erster Linie wurde sie zur Prävention und Deeskalation bei Konflikten entwickelt und kommt bei Polizei, Ordnungsämtern, Verkehrsbetrieben und Sicherheitsdiensten zum Einsatz.
@@ -103,6 +120,19 @@ Beim Einsatz in Zügen der Deutschen Bahn lässt sich beispielsweise das im Zug 
 In Verbindung mit Geräten anderer Hersteller, wie z.B. einem Bluetooth-fähigem Waffenholster, kann die Body-Cam über Bluetooth mit diesem gekoppelt werden.
 Hierdurch kann automatisch eine Aufnahme gestartet werden, wenn die Waffe aus dem Holster gezogen wird.
 [vgl. \autoref{anhang:datenblatt}]
+
+\begin{figure}[h]
+    \centering
+    \subfloat[][]{
+        \includegraphics[width=0.45\textwidth]{/BC_docking_7_empty.png}
+        }
+    \qquad
+    \subfloat[][]{
+        \includegraphics[width=0.45\textwidth]{/BC_docking_7_full.png}
+        }
+    \caption{Dockingstation mit der sieben Body-Cams gleichzeitig verwaltet werden können}
+    \label{fig:BC_docking_7}
+\end{figure}
 
 Die NetCo Body-Cam wird grundsätzlich in zwei Versionen angeboten.
 In der Record-Version wird die Aufnahme auf dem Gerät gespeichert und nach dem Einsatz automatisch über eine Docking-Station in das zentrale System überspielt.
@@ -182,114 +212,78 @@ durch einen Automatismus realisiert.
 
 \section{Use-Cases}
 \section{Anforderungen des Gesamtsystems}
-Aus den Punkten des Lastenheftes (ändern da kein Lastenheft als direkte Quelle existiert) lassen sich folgende Anforderungen für das Gesamtsystem herausarbeiten.
+Die Anforderungen die an das neue Lone-Worker Feature gestellt werden, ergeben sich durch verschiedene DGUV-Normen sowie zusätzliche Unternehmensanforderungen.
+Folgenden Bestimmungen richten sich dabei an das Gesamtsystem des Lone-Worker Feature und sind keine Anforderungen an den praktischen Teil dieser Arbeit.
+Der implementierte Prototyp legt einen Grundbaustein für die spätere Umsetzung aller Funktionalitäten des LW-Modus.
 
-Die BC sollte einen Schutz gegen versehentliche Aktivierung des LW-Modus besitzen.
-%%
-Dies lässt sich zum Beispiel wie folgt realisieren: Die Aktivierung eines Voralarms, der ohne Konsequenzen abgebrochen werden kann.
-%%
-Ein spezielles Design des Aktivierungstasters. Hier kann beispielsweise ein versenkter Taster benutzt werden für den mehr Kraft zur
-Aktivierung benötigt wird.
-%%
-Die Dauer des Tastendrucks zur Aktivierung des Modus kann erhöht werden, sollte jedoch im Bereich von wenigen Sekunden sein.
-%%
+Die Body-Cam sollte einen Schutz gegen versehentliche Aktivierung des LW-Modus besitzen.
+Dies lässt sich zum Beispiel wie folgt realisieren:
+\begin{itemize}
+    \item Die Aktivierung eines Voralarms, der ohne Konsequenzen abgebrochen werden kann.
+    \item Ein spezielles Design des Aktivierungstasters. Hier kann beispielsweise ein versenkter Taster benutzt werden für den mehr Kraft zur Aktivierung benötigt wird.
+    \item Die Dauer des Tastendrucks zur Aktivierung des Modus kann erhöht werden, sollte jedoch im Bereich von wenigen Sekunden sein.
+\end{itemize}
 
 Es sollte die Möglichkeit für eine „Two-Way-Audio“-Verbindung zwischen Client und Server bestehen.
-%%
-Dies schafft für den LW die Gelegenheit Kommentare der überwachenden Person zu hören und auf diese zu antworten.
-%%
-Außerdem kann der LW nach mündlicher Aufforderung eine Aktion bestätigen oder Informationen über den Einsatzfortschritt geben.
-%%
+Dies schafft für den Lone-Worker die Gelegenheit Kommentare der überwachenden Person zu hören und auf diese zu antworten.
+Außerdem kann der Lone-Worker nach mündlicher Aufforderung eine Aktion bestätigen oder Informationen über den Einsatzfortschritt geben.
 
 Nach einer erfolgreichen Authentifizierung soll das MC Fernzugriff zum LW bekommen.
-%%
-Dies soll folgende Optionen ermöglichen: Abruf von Audio- und Videostreams, Abruf von auf dem Gerät gespeicherten Mediendateien
-(Datengröße kann für LTE ggf. zu groß sein), Abruf von Geräteparametern und das setzten bestimmter Parameter, Lesen des Gerätestatus
-sowie die Möglichkeit eine neue Firmware auf einzelne Geräte zu übertragen.
-%%
-Einige dieser Optionen, wie das Setzen von Geräteparametern oder ein Update der Firmware sollten nur bei ausgeschaltetem LW-Modus
-und nach Bestätigung des LW möglich sein.
-%%
+Dies soll folgende Optionen ermöglichen:
+\begin{itemize}
+    \item Abruf von Audio- und Videostreams.
+    \item Abruf von auf dem Gerät gespeicherten Mediendateien (Datengröße kann für LTE ggf. zu groß sein).
+    \item Abfrage und setzten von Geräteparametern.
+    \item Lesen des Gerätestatus
+    \item Übertragung von neuer Firmware
+\end{itemize}
 
-Der LW soll zu jeder Zeit die Möglichkeit haben Informationen über die Stärke des Netzwerksignals und den Batteriestatus am Gerät zu sehen.
-%%
-Hierfür soll der aktuelle Signalpegel und Batteriezustand auf dem Display zu sehen sein sowie ein haptisches, akustisches oder visuelles
-Feedback bekommen, wenn keine Verbindung verfügbar ist oder der Batteriestand in einen kritischen Bereich fällt.
-%%
-Dem MC sollen diese Informationen, sowie die Benachrichtigung bei kritischen Batteriezustand ebenfalls zur Verfügung stehen.
-%%
+Einige dieser Optionen, wie das Setzen von Geräteparametern oder ein Update der Firmware sollten nur bei ausgeschaltetem LW-Modus und nach Bestätigung des Lone-Worker möglich sein.
 
-Dem Träger der BC soll die Gelegenheit haben einen „Timer“ einzustellen.
-%%
-Dieser dient dazu die Alarmfunktion temporär abzustellen.
-%%
-Diese Option ist vor allem sinnvoll, wenn es zu einer erwartenden Einschränkung des Kommunikationsnetzes kommt.
-%%
-Dies tritt beispielweise auf, wenn sich der LW in einen Fahrstuhl begibt.
-%%
-In dem Fall kann der Träger ein Aussetzen der Verbindung in der BC vermerken.
-%%
+Der Lone-Worker soll zu jeder Zeit die Möglichkeit haben Informationen über die Stärke des Netzwerksignals und den Batteriestatus am Gerät zu sehen. % siehe Abbildung Schema??
+Hierfür soll der aktuelle Signalpegel und Batteriezustand auf dem Display zu sehen sein sowie ein haptisches, akustisches oder visuelles Feedback bekommen, wenn keine Verbindung verfügbar ist oder der Batteriestand in einen kritischen Bereich fällt.
+Dem Überwachungszentrum sollen diese Informationen, sowie die Benachrichtigung bei kritischem Batteriezustand ebenfalls zur Verfügung stehen.
+
+Dem Träger der Body-Cam soll die Gelegenheit haben einen \glqq Timer\grqq{} einzustellen.
+Dieser dient dazu die Alarmfunktion temporär abzustellen und ist vor allem sinnvoll, wenn es zu einer erwartenden Einschränkung des Kommunikationsnetzes kommt.
+Dies tritt beispielweise auf, wenn sich der Lone-Worker in einen Fahrstuhl begibt.
+In dem Fall kann der Träger ein Aussetzen der Verbindung in der Body-Cam vermerken.
 In dieser Zeit wird bei Verbindungsverlust kein Alarm auf beiden Seiten der Kommunikation ausgelöst.
-%%
-Das MC wird über das Einschalten dieser Funktion informiert.
-%%
-Wenn nach Ablauf der Zeit keine Verbindung zwischen BC und MC hergestellt werden kann, gehen beide Parteien in den Alarmzustand über.
-%%
-Der LW hat die Möglichkeit den Timer vor Ablauf der Zeit zu deaktivieren und damit wieder in die normale Funktionsweise des LW-Modus überzugehen.
-%%
+Das Überwachungszentrum wird über das Einschalten dieser Funktion informiert.
+Wenn nach Ablauf der Zeit keine Verbindung hergestellt werden kann, gehen beide Parteien in den Alarmzustand über.
+Der Lone-Worker hat die Möglichkeit den Timer vor Ablauf der Zeit zu deaktivieren und damit wieder in die normale Funktionsweise des LW-Modus überzugehen.
 
-Die BC soll dem MC auf Anfrage die aktuelle Position und/oder einer Liste der letzten 50 bekannten Positionen übermitteln.
-%%
-Dies wird vor allem dafür genutzt das Konfigurieren und Überwachen von „Geo-Fences“ zu ermöglichen.
-%%
-Damit können Ein- und Austreten aus bestimmten Bereichen überwacht werden und dem MC automatische Benachrichtigungen
+Die Body-Cam soll dem Zentrum auf Anfrage die aktuelle Position oder eine Liste der letzten 50 bekannten Positionen übermitteln.
+Dies wird vor allem dafür genutzt das Konfigurieren und Überwachen von \glqq Geo-Fences\grqq{} zu ermöglichen.
+Damit können Ein- und Austreten aus bestimmten Bereichen überwacht werden und dem Überwachungszentrum automatische Benachrichtigungen
 über diese Vorgänge gemacht werden.
-%%
-Außerdem können auf der BC bestimmte Reaktionen konfiugriert werden die beim Betreten oder Verlassen von „Geo-Fence“-Gebieten aktiv werden.
-%%
-Zum Beispiel kann der LW-Modus aktiviert oder deaktiviert werden, automatisch den Videostream an das MC übertragen werden
-oder der LW wird explizit durch ein Feedback vor dem Betreten eines besonderen Gefahrengebiets gewarnt.
-%%
+Außerdem können auf der Body-Cam bestimmte Reaktionen konfiguriert werden die beim Betreten oder Verlassen von \glqq Geo-Fences\grqq{}-Gebieten aktiv werden.
+Zum Beispiel lassen sich damit folgende Szenarien bei Ein- oder Austritt abbilden:
+\begin{itemize}
+    \item Aktivierung oder Deaktivierung des LW-Modus.
+    \item Automatische Übertragung des Audio- und Videostreams.
+    \item Warnung des Lone-Worker durch ein konfigurierbares Feedback, vor dem Betreten eines besonderen Gefahrengebiets.
+\end{itemize}
 
-Das MC soll die Möglichkeit haben, Statistiken über die einzelnen Geräte anfertigen zu können.
-%%
+Das Überwachungszentrum soll die Möglichkeit haben, Statistiken über die einzelnen Geräte anfertigen zu können.
 Dafür müssen alle Aktivierungsmeldungen, Alarme, einschließlich Fehlalarme erfasst werden.
-%%
-Ebenfalls soll die Verfügbarkeit des Mobilfunknetztes aufgezeichnet werden.
-%%
-Diese Informationen müssen von der BC bereitgestellt werden und sind vom MC zu erfassen.
-%%
-Außerdem soll die BC alle Events dokumentieren und auf ihrer SD-Karte speichern.
-%%
+Ebenfalls soll die Verfügbarkeit des Mobilfunknetzes aufgezeichnet werden.
+Diese Informationen müssen von der BC bereitgestellt werden und sind vom Zentrum zu erfassen.
+Außerdem soll die Body-Cam alle Events dokumentieren und auf ihrer SD-Karte speichern.
 Darunter zählen die oben beschriebenen Auskünfte sowie alle Gerätestatusinformationen wie beispielsweise Batteriestatus
 oder Speicherplatz, GPS-Standorte, Änderungen in der Konfiguration, Aktivierung und Deaktivierung des LW-Modus
 sowie des temporären „Timer“-Modus, Anfragen und Antworten von und an das MC und Softwareinformationen.
-%%
 
-Die BC soll dem LW ein haptisches, akustisches und visuelles Feedback geben können.
-%%
-Dies kann in Form eines Voralarms sein, wie vorhergehend beim Aktivieren des LW-Modus beschrieben oder beim Ausführen eines Alarms
-um die Aufmerksamkeit des LW zu erhalten.
-%%
-Außerdem kann dadurch das MC dem LW durch ein haptisches Feedback einen „Stillen“-Alarm senden.
-%%
-Weiterhin soll das Display der BC für visuelles Feedback sowie das Anzeigen von Textnachrichten vom MC an den LW genutzt werden.
-%%
-Außerdem kann das MC über diese Schnittstelle Fragen an den LW stellen.
-%%
-Diese kann der Träger durch auf dem Display eingeblendete Optionen beantworten.
-%%
-Diese werden vom MC mit der Frage mitgeschickt und sind somit vorher festgelegt.
-%%
-Da das Display über eine Touch-Screen Funktion verfügt, kann er LW die Antwortmöglichkeiten mit Berührung des Displays auswählen.
-%%
+Die Body-Cam soll dem Lone-Worker ein haptisches, akustisches und visuelles Feedback geben können.
+Dies kann in Form eines Voralarms sein, wie vorhergehend beim Aktivieren des LW-Modus beschrieben oder beim Auslösen eines Alarms, um die Aufmerksamkeit des Lone-Worker zu erhalten.
+Außerdem kann dadurch das Überwachungszentrum dem Lone-Worker durch ein haptisches Feedback einen \glqq Stillen\grqq{}-Alarm senden.
+Weiterhin soll das Display der BC für visuelles Feedback sowie das Anzeigen von Textnachrichten genutzt werden.
+Der Träger kann durch auf dem Display eingeblendete Optionen, die Fragen eines Operators beantworten.
+Die verschiedenen Antwortmöglichkeiten sind vorher vom Operator festzulegen.
 
-Die BC soll die Möglichkeit bieten die Konfigurationsmöglichkeiten einzuschränken, um ungewollte oder unbefugte Änderungen zu verhindern.
-%%
+Die Body-Cam soll die Möglichkeit bieten die Konfigurationsmöglichkeiten einzuschränken, um ungewollte oder unbefugte Änderungen zu verhindern.
 Dies dient in erster Linie der Sicherheit des Trägers und soll einen einfachen und schnellen Einsatz gewährleisten.
-%%
-So können die Geräte vorher durch ein Unternehmen oder eine Abteilung konfiguriert und anschließend an die einzelnen LW ausgeteilt werden.
-
+So können die Geräte vorher durch ein Unternehmen oder eine Abteilung konfiguriert und anschließend an die einzelnen Lone-Worker ausgeteilt werden.
 
 \subfilebib % Makes bibliography available when compiling as subfile
 \end{document}

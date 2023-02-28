@@ -4,7 +4,7 @@
 
 \chapter{Design}\label{chap:design}
 
-\section{Erarbeitung aller Funktionen}
+\section{Erarbeitung aller Funktionen}\label{chap:funktionen}
 Nach Auswertung der Anforderungen lassen sich folgende Funktionen herausarbeiten, die der LW-Modus können muss.
 
 (voralarme können ja über display weggedrückt werden im kaptiel funktion ergänzen?)
@@ -28,7 +28,7 @@ Außerdem Parameter, wie die Dauer nach dem bei Verbindungsverlust ein Alarm aus
 Diese Verbindung dient vorerst der Anmeldung und Positionsübermittlung ohne ununterbrochene Verbindungsüberwachung und kann jederzeit vom Alleinarbeiter beendet werden.
 Beim Beenden der Verbindung wird diese sauber abgebaut und die Body-Cam meldet sich beim Überwachungszentrum ab.
 Wenn ein Verbindungsverlust eintritt, wird eine automatische Wiederherstellung ohne Alarmauslösung ausgeführt.
-Bei eingeschalteten LW-Modus geht die Verbindung in einen \textcolor{red}{????} Zustand über.
+Bei eingeschalteten LW-Modus geht die Verbindung in einen strengeren Zustand über.
 In diesem wird ein Verbindungsverlust unmittelbar festgestellt und geht auf beiden Seiten mit Auslösung eines Alarms einher, falls die Verbindung in einer vorher definierten Zeit nicht wiederhergestellt werden kann.
 \\
 
@@ -89,6 +89,13 @@ Außerdem wäre es möglich einen Bereich mit besonders hohen Gefahrenpotenzial 
 Der LW würde dann bei betreten über diesen Umstand per Body-Cam informiert werden, damit er die volle Konzentration auf seine Sicherheit lenken kann.
 Zusätzlich kann die Standortüberwachung in die Protokollierung der Alleinarbeit mit einfließen um diese mit Informationen über Laufwege und Aufenthaltsdauer zu verbessern.
 \\
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[height=0.4\textwidth]{/BC_schema_front.png}
+    \caption{Schemata der Front einer Body-Cam}
+    \label{fig:BC_schema}
+\end{figure}
 
 Durch das vorhandene Display mit Touch-Funktion besteht die Möglichkeit zum anzeigen und beantworten von Textnachrichten.
 Mit den Nachrichten kann das Überwachungszentrum dem LW kurze Informationen übermitteln oder nach dem Status fragen, ohne eine Sprachverbindung zu benutzen.
