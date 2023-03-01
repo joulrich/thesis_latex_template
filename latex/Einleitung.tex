@@ -49,24 +49,39 @@ Außerdem sollte bei einem plötzlichen Verbindungsabbruch die Kommunikation so 
 Dies stellen Mobilfunk oder WLAN nativ nicht zur Verfügung.
 Neben den vorhandenen Funktionen der Body-Cam (Aufnahme, Streaming, Dokumentation), sollen durch den LW-Modus weitere Optionen geschaffen werden.
 Diese sollen sicherstellen, dass die Body-Cam alle nötigen Voraussetzungen erfüllt, um die Sicherheit einer allein arbeitenden Person zu unterstützen.
-Darunter zählen beispielsweise Alarmsignalisierung, Geräteüberwachung, Sprachkommunikation, Video- und Audiostreaming, Textnachrichten oder Geofencing.
+% Darunter zählen beispielsweise Alarmsignalisierung, Geräteüberwachung, Sprachkommunikation, Video- und Audiostreaming, Textnachrichten oder Geofencing.
 Alle Ereignisse muss die Body-Cam sicher und nachvollziehbar protokollieren.
+
+Im Rahmen dieser Arbeit wird ein Kommunikationsprotokoll zur Realisierung der Lone-Worker-Verbindung zwischen Body-Cam und Überwachungszentrum entwickelt.
+Im praktischen Teil wird dazu die Kommunikationsbasis in Form eines Prototyps implementiert der eine einfache Verbindung zwischen Client und Server mithilfe des Protokolls realisiert.
+Die bestehende Implementierung der Body-Cam, soll im späteren Verlauf des Lone-Worker-Projekts, durch das Kommunikationsprotokoll erweitert werden können.
+Der Prototyp bildet hierfür die Grundlage.
+Die Integration der höheren Funktionen beispielsweise Alarmsignalisierung, Geräteüberwachung, Sprachkommunikation, Video- und Audiostreaming, Textnachrichten oder Geofencing werden in der Designphase beschrieben und theoretisch diskutiert.
+Sie sind jedoch nicht Teil der Implementierung.
+Daraus ergeben sich folgende Punkte für die Entwicklung eines Protokolls, die innerhalb der Arbeit behandelt werden:
+\begin{itemize}
+    \item Verbindungsaufbau und -abbau
+    \item Abbrucherkennung (Heartbeats)
+    \item Wiederherstellung der Verbindung nach Verlust
+    \item Senden und Empfangen von einheitlichen Nachrichten
+    \item Antworten auf eingehende Anfragen
+\end{itemize}
 
 Die vorliegende Bachelorarbeit gliedert sich in drei Hauptteile.
 Im ersten Teil werden die Grundlagen für die weitere Arbeit gelegt.
-Dazu wird beschrieben was Alleinarbeit ist und wie sich diese in verschiedene Gefährdungsstufen einteilen lässt.
+Es wird beschrieben was Alleinarbeit ist und wie sich diese in verschiedene Gefährdungsstufen einteilen lässt.
 Außerdem welche aktuellen Alleinarbeitslösungen es gibt und wie sich die Body-Cam mit dem LW-Modus dort einordnen lässt.
 Anschließend wird der aktuelle Zustand der Body-Cam aufgezeigt und beschrieben wie diese durch die neue Lone-Worker Funktion erweitert wird.
-Weiterhin wird das sich daraus ergebene Gesamtsystem beschrieben und dessen Anforderungen herausgearbeitet.
+Das sich daraus ergebene Gesamtsystem wird beschrieben und dessen Anforderungen herausgearbeitet.
 Diese ergeben sich aus den DGUV-Normen und zusätzlichen Unternehmensanforderungen.
 Im zweiten Teil wird das Designkonzept behandelt.
 Dafür werden aus den Anforderungen die verschiedenen Funktionen erarbeitet, die in den LW-Modus der Body-Cam einfließen.
-Des Weiteren wird das Protokoll und dessen Aufbau erläutert um eine Kommunikation zwischen der Body-Cam und dem Überwachungszentrum sicherzustellen.
+Das Protokoll und dessen Aufbau wird erläutert um eine Kommunikation zwischen der Body-Cam und dem Überwachungszentrum sicherzustellen.
 Außerdem werden alle Schnittstellen beschrieben die sich zwischen der bestehenden Body-Cam Implementierung und dem neuen Lonewoker-Modus ergeben.
-Zusätzlich wird durch Statusmaschinen die Implementierung der Funktionen in ein einfaches Schema gebracht und die Realisierung damit vorbereitet.
+% Zusätzlich wird durch Statusmaschinen die Implementierung der Funktionen in ein einfaches Schema gebracht und die Realisierung damit vorbereitet.
 Der letzte Teil behandelt die Realisierung des Projekts.
-Hier werden zuerst die verwendeten Technologien und technischen Grundlagen erklärt.
-Danach folgt die Implementierung, in dem der Entwicklungsprozess beschrieben wird, um auf Herausforderungen einzugehen.
+Zuerst werden die verwendeten Technologien und technischen Grundlagen erklärt.
+Danach folgt die Beschreibung des Entwicklungsprozesses und die Vorstellung der Implementierung.
 Anschließend wird der zuvor entwickelte Prototyp durch ein Testprotokoll auf seine Funktion überprüft und die Ergebnisse werden ausgewertet.
 
 
