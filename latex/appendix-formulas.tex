@@ -29,7 +29,22 @@ Dieser Testfall überprüft, ob der Client erfolgreich eine Verbindung zum Serve
 \textbf{Erwartetes Ergebnis:}\\
 Die Websocket-Verbindung zwischen Client und Server ist hergestellt und beide Seiten haben die gleiche Timeoutzeit.
 
-\textbf{Ergebnis:}\\
+\textbf{Ergebnis:}
+\begin{itemize}
+    \item Server ist gestartet und wartet auf eingehende Verbindung auf Port 8080.
+    \item Client wird gestartet und Verbindungsanfrage an Server wird festgestellt.
+    \item Handshake-Verfahren wird erfolgreich durchgeführt.
+    \item Beide Seiten sind miteinander Verbunden.
+    \item Client sendet die \glqq initialMessage\grqq{} an den Server.
+    \item Server empfängt die Nachricht und setzt die Timeoutzeit auf zwei Sekunden.
+    \begin{lstlisting}[caption={Beispiel einer Protokollnachricht vom Typ initialMessage},captionpos=b,language=json,firstnumber=1]
+        { "creationTimestamp":"11:26:02 [ Wednesday 01 March 2023 ]",
+        "referenceNumber":1,
+        "typ":"initialMessage",
+        "data":"2000",
+        "responseReferenceNumber":null }
+    \end{lstlisting}
+\end{itemize}
 
 
 
@@ -56,7 +71,16 @@ Dieser Testfall überprüft, ob der Client und der Server in der Lage sind, erfo
 \textbf{Erwartetes Ergebnis:}\\
 Der Heartbeat wurde erfolgreich zwischen beiden Seiten ausgetauscht und der Timer für Verbindungsverlust wurde zurückgesetzt.
 
-\textbf{Ergebnis:}\\
+\textbf{Ergebnis:}
+\begin{itemize}
+    \item Client und Server sind miteinander Verbunden.
+    \item Server sendet eine Nachricht vom Typ Heartbeat an den Client.
+    \item Die Nachricht wird vom Client empfangen.
+    \item Der Timer für Verbindungsverlust (Clientseite) wird zurückgesetzt.
+    \item Der Client detektiert die Nachricht als Heartbeat und sendet daraufhin eine Nachricht vom Typ Heartbeat zurück.
+    \item Die Heartbeat-Nachricht wird vom Server empfangen.
+    \item Der Timer für Verbindungsverlust (Serverseite) wird zurückgesetzt.
+\end{itemize}
 
 
 
@@ -83,7 +107,15 @@ Dieser Testfall überprüft, ob der Client in der Lage ist, eine Verbindung zum 
 \textbf{Erwartetes Ergebnis:}\\
 Die Websocket-Verbindung zwischen Client und Server wird erfolgreich wiederhergestellt.
 
-\textbf{Ergebnis:}\\
+\textbf{Ergebnis:}
+\begin{itemize}
+    \item Client und Server sind miteinander verbunden.
+    \item Der Client erwartet einen Heartbeat vom Server empfängt diesen aber innerhalb von 2 Sekunden nicht.
+    \item Die Verbindung wird zurückgesetzt und der Client versucht die Verbindung zum Server wieder herzustellen.
+    \item Der Server empfängt die Verbindungsanfrage vom Client.
+    \item Nach erfolgreichem Handshake sind beide Seite wieder miteinander verbunden.
+    \item Server und Client können wieder erfolgreich Nachrichten austauschen.
+\end{itemize}
 
 
 
@@ -110,7 +142,15 @@ Dieser Testfall überprüft, ob der Client in der Lage ist, eine Verbindung zum 
 \textbf{Erwartetes Ergebnis:}\\
 Die Websocket-Verbindung zwischen Client und Server wird nicht erfolgreich wiederhergestellt. Beide Seiten teilen diesen Alarmfall über die Programmausgabe mit.
 
-\textbf{Ergebnis:}\\
+\textbf{Ergebnis:}
+\begin{itemize}
+    \item Client und Server sind miteinander verbunden.
+    \item Der Client erwartet einen Heartbeat vom Server empfängt diesen aber innerhalb von 2 Sekunden nicht.
+    \item Die Verbindung wird zurückgesetzt und der Client versucht die Verbindung zum Server wieder herzustellen.
+    \item Der Client kann keine neue Verbindung zum Server aufbauen.
+    \item Nach 15 Sekunden erfolglosen Verbindungsversuchen benachrichtigt der Client über einen Verlust der Verbindung.
+    \item Es kommt somit zum Alarmfall
+\end{itemize}
 
 
 

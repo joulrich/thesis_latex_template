@@ -186,7 +186,24 @@ Jeder Testfall wurde mit dem implementierten Prototyp vollzogen und die Ergebnis
 
 \section{Ergebnisse}
 
+Nach dem Planen und Designen des neuen Lone-Worker Feature für die Body-Cam, ist ein weiterer wichtiger Teil die Umsetzung eines Prototyps.
+Dieser umfasst die Kommunikationsbasis des Lone-Worker-Modus und verfügt über Verbindungsaufbau, -abbau, -wiederaufbau und Abbrucherkennung.
+Der Prototyp wurde im Rahmen des praktischen Teils dieser Arbeit implementiert und mit dem im vorherigen Kapitel entwickelten Testprotokoll, auf Stabilität und Funktionalität überprüft.
 
+Die vier Testfälle wurden vom Prototyp erfolgreich absolviert.
+Er ist somit in der Lage eine Verbindung zwischen Body-Cam als Client und Überwachungszentrum als Server aufzubauen, zu halten und wiederherzustellen.
+Durch das Nachrichtenprotokoll können Informationen zwischen beiden Seiten ausgetauscht werden.
+Im jetzigen Zustand wird dies in erster Linie genutzt, um Heartbeat-Nachrichten zwischen Server und Client auszuwechseln.
+Infolgedessen kann der Client den Verlust einer Verbindung in kurzer Zeit erkennen und Maßnahmen zur Wiederherstellung einleiten.
+Der Prototyp wurde so designt, dass er als Grundlage dient und mit weiteren, in dieser Arbeit beschriebenen Funktionen, erweitert werden kann.
+
+Gegenwärtig kann das Programm nur über die einzelnen Zustände informieren.
+Es gibt zum Beispiel Benachrichtigungen über den Aufbau und Verlust einer Verbindung.
+Dem Prototyp ist es jedoch nicht möglich aktiv einen Alarm auf der Body-Cam auszulösen.
+Ebenfalls sind Schnittstellen zwischen der aktuellen Body-Cam und dem neuen Lone-Worker-Modus, zum Teil vorbereitet aber noch nicht verfügbar.
+
+Insgesamt wird durch den Prototyp eine solide Kommunikationsbasis geschafften, die in die bestehende Implementierung der Body-Cam eingebunden werden kann.
+Er gibt einen ersten Einblick wie eine stabile Verbindung zwischen Body-Cam und Überwachungszentrum realisiert wird.
 
 \subfilebib % Makes bibliography available when compiling as subfile
 \end{document}
