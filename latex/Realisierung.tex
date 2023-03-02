@@ -99,8 +99,6 @@ Zur Versionsverwaltung wurde Git genutzt, mit einem eigenen Repository auf GitHu
 
 \section{Implementierung}
 
-statemaschine vllt hier her und nicht in design teil ?
-
 Im praktischen Teil der Bachelorarbeit wurde der Prototyp einer Client-Server-Verbindung implementiert.
 Das Hauptaugenmerk lag dabei auf der Umsetzung der Client-Seite.
 Konkret wurde eine Kommunikationsbibliothek programmiert, die später in den Code der vorhanden Body-Cam eingebunden werden kann.
@@ -108,7 +106,7 @@ Sie erweitert die bestehende Implementierung um das Lone-Worker Feature.
 Über die in \autoref{chap:primitiven} beschriebenen Schnittstellen kann die Body-Cam den neuen Lone-Worker-Modus ansteuern.
 
 Die Body-Cam fungiert als Client.
-Sobald der Träger die Kamera einschaltet versucht sie sich mit dem Überwachungszentrum zu verbinden, welches vorher konfiguriert worden ist.
+Sobald der Träger die Kamera einschaltet versucht sie sich mit dem Überwachungszentrum zu verbinden, welches vorher konfiguriert werden muss.
 Die Aufgaben des Clients beinhalten:
 \begin{itemize}
     \item Initialisierung der Lone-Worker-Verbindung zum Überwachungszentrum
