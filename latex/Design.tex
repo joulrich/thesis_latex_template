@@ -76,8 +76,7 @@ Die Genauigkeit der Position wird durch die Verbindung von GPS, Mobilfunk, WLAN 
 Dies ist in erster Linie wichtig um bei einem Notfall den exakten Standort der in Gefahr befindlichen Person zu detektieren.
 So können Notfallkräfte im Ernstfall schnell und gezielt reagieren.
 Ein weiterer Vorteil dieser Positionsüberwachung ist das sogenannte "Geofencing".
-Dies beschreibt das automatische Auslösen bestimmter Aktion beim Ein- oder Austritt aus einem vorher festgelegten Bereich.
-(https://de.wikipedia.org/wiki/Geofencing finde noch keine bessere Quelle).
+Dies beschreibt das automatische Auslösen bestimmter Aktion beim Ein- oder Austritt aus einem vorher festgelegten Bereich \cite[]{geofencing}.
 In Bezug auf den Lone-Worker-Modus könnten diese Aktionen z.B. das Ein- oder Ausschalten des Modus sein, wenn der Träger mit seiner Schicht beginnt und den zu überwachenden Bereich betritt.
 Außerdem wäre es möglich einen Bereich mit besonders hohen Gefahrenpotenzial zu markieren.
 Der Lone-Worker würde dann bei betreten über diesen Umstand per Body-Cam informiert werden, damit er die volle Konzentration auf seine Sicherheit lenken kann.
@@ -90,7 +89,7 @@ Zusätzlich kann die Standortüberwachung in die Protokollierung der Alleinarbei
     \label{fig:BC_schema}
 \end{figure}
 
-Durch das vorhandene Display mit Touch-Funktion besteht die Möglichkeit zum anzeigen und beantworten von Textnachrichten.
+Durch das vorhandene Display mit Touch-Funktion besteht die Möglichkeit zum Anzeigen und Beantworten von Textnachrichten.
 Mit den Nachrichten kann das Überwachungszentrum dem Lone-Worker kurze Informationen übermitteln oder nach dem Status fragen, ohne eine Sprachverbindung zu benutzen.
 Die Beantwortung kann der Träger über vorher definierte Antworten übernehmen, die als Buttons auf dem Display erscheinen.
 Automatisch generierte Textnachrichten können zur Unterstützung genutzt werden.
@@ -99,112 +98,70 @@ Unter diese Events zählen beispielsweise Alarmauslösung, Ein- oder Austritt au
 Außerdem wird das Display dafür genutzt, alle möglichen Statusinformationen über das Gerät anzuzeigen, wie Akkustand, Mobilfunkstärke oder Temperatur.
 
 \section{Protokolldesign}\label{chap:protokolldesign}
-Damit alle Anforderungen an die Kommunikation zwischen BC und MC erfüllt werden können, wird ein eigenes Protokoll verwendet.
-%%
+Damit alle Anforderungen an die Kommunikation zwischen Body-Cam und Überwachungszentrum erfüllt werden können, wird ein eigenes Protokoll verwendet.
 Dieses wird in der einheitlichen und weit verbreiteten „JavaScript Object Notation“ (JSON) verfasst.
-%%
 Dieser Standard hat für die Anwendung folgende Vorteile.
-%%
 Das Protokoll kann einfach zwischen Client und Server übertragen werden, da JSON sehr einfach in einen String umgewandelt werden kann.
-%%
-Es existieren bereits in sehr vielen Programmiersprachen Bibliotheken die JSON verstehen, bearbeiten und umwandeln können,
-welche Nachrichten schnell zwischen verschiedenen Anwendungen konvertiert werden können, wenn dies benötigt wird.
-%%
+Es existieren bereits in sehr vielen Programmiersprachen Bibliotheken die JSON verstehen, bearbeiten und umwandeln können, welche Nachrichten schnell zwischen verschiedenen Anwendungen konvertiert werden können, wenn dies benötigt wird.
 Das Protokoll kann durch diese Form einfach und schnell erweitert oder angepasst werden.
-%%
 Durch seine einheitliche Struktur und Hierarchieebenen wird dieser Effekt verstärkt und die Nachrichten können dadurch gut strukturiert werden.
-%%
 Es ist menschenlesbar und kann somit ohne spezielles Programm von Menschen gelesen und verstanden werden.
-%%
-Dies hilft z.B. beim Debuggen oder um Protokolleinträge schneller lesen zu können.
-%%
+Dies hilft z.B. beim Debuggen oder um Protokolleinträge schneller lesen zu können. \cite[]{ecma_404}
 
 Das entwickelte Protokoll enthält folgende Informationen: Zeitstempel, Referenznummer, Nachrichtentyp, Nachrichteninhalt, Antwortreferenznummer.
-%%
-Der Zeitstempel wird der Nachricht beim Erstellen gegeben, damit der zeitliche Verlauf nachvollzogen werden kann und die
-Nachrichten in einem Verlaufsprotokoll angelegt werden können.
-%%
+Der Zeitstempel wird der Nachricht beim Erstellen gegeben, damit der zeitliche Verlauf nachvollzogen werden kann und die Nachrichten in einem Verlaufsprotokoll angelegt werden können.
 Die Referenznummer wird aufsteigend für jede Nachricht vergeben und macht diese eindeutig identifizierbar.
-%%
 Diese Nummer wird auch als Referenznummer für eine Antwort auf eine bestimmte Nachricht genutzt.
-%%
 Diese wird dann unter Antwortreferenznummer der Nachricht mitgeben und findet nur bei Nachrichten des Typs „Antwort“ Anwendung.
-%%
 Der Nachrichtentyp gibt an, welchen Typ die geschickte Mitteilung hat.
-%%
 Hier gibt es momentan die Typen Request, Answer, Heartbeat und initialMessage.
-%%
 Herzschlag wird immer dann vergeben, wenn ein Nachrichtenaustausch zwischen Client und Server stattfindet, der zur Verbindungssicherung dient.
-%%
-Die initiale Nachricht schickt der Client einmalig am Anfang einer Verbindung an dem Server,
-um ihm Einstellungs- und Verbindungsparameter mitzuteilen.
-%%
+Die initiale Nachricht schickt der Client einmalig am Anfang einer Verbindung an dem Server, um ihm Einstellungs- und Verbindungsparameter mitzuteilen.
 Im Nachrichteninhalt befindet sich alles, was die Mitteilung als Daten beinhaltet.
-%%
 Dies können beispielsweise gerade genannte Parameter oder Anfrage bzw. Antwortdetails sein.
-%%
 Durch den Aufbau der JSON kann das Datenfeld bei Bedarf ebenfalls strukturiert werden, um auch größere Datenmengen gut abbilden zu können.
-%%
-
-% (TODO: Quellen für Vorteile bzw. zum Aufbau von JSON finden) !!!!
 
 \section{Primitiven}\label{chap:primitiven}
+% https://www.itwissen.info/Primitive-primitive.html
 Im folgenden Kapitel werden alle Primitiven aufgeführt und beschrieben.
-%%
-Das sind alle Informationen, die der Lone-Worker-Modus von der Body-Cam braucht, um die vollständige Funktion zu gewährleisten
-und um alle Anfragen des Überwachungszentrums zu beantworten.
-%%
+Als Primitiven sind alle Informationen zu verstehen, die zwischen Lone-Worker-Modus und der bestehenden Body-Cam ausgetauscht werden, um die vollständige Funktionsfähigkeit zu gewährleisten.
+Sie sind die Schnittstellen, über die der Modus beispielsweise Geräteinformationen abrufen kann.
 
-Um die Grundfunktionalität des Geräts und damit der Funktion des LW-Modus sicher zu stellen, werden in erster Linie
-die Vitalwerte des Geräts benötigt.
-%%
-Zudem alle weiteren Informationen, die es über die Body-Cam gibt.
-%%
-Darunter zählen die eindeutige Identifikationsnummer, die aktuelle Versionsnummer der Firm- und Software,
-ein aktueller Zeitstempel, der Batteriestatus, der vorhandene Speicherplatz für Bild- und Videodateien,
-die Temperatur, die Mobilfunkstärke sowie Informationen über die Mobilfunkverbindung,
-wenn das Gerät ins Netz eingewählt ist, WLAN-Stärke und Verbindungsdetails, falls eine WLAN-Verbindung besteht und
-der letzte bekannte Standort der Body-Cam.
-%%
+Um die Grundfunktionalität des Geräts und dem damit verbundenen Lone-Worker-Modus sicherzustellen, werden in erster Linie
+die Vitalwerte des Geräts sowie Verbindungsinformationen benötigt.
+Es müssen jedoch alle Informationen bereitgestellt werden, die für den Einsatz als Alleinarbeitslösung notwendig sind.
+Darunter zählen unter anderem:
+\begin{itemize}
+    \item eindeutige Identifikationsnummer der Body-Cam
+    \item aktuelle Versionsnummer der Firmware und Software
+    \item aktueller Zeitstempel
+    \item Batteriezustand
+    \item vorhandene Speicherplatz für Bild- und Videodateien
+    \item Temperatur
+    \item Mobilfunkstärke sowie Informationen über die Mobilfunkverbindung
+    \item WLAN-Stärke und dazugehörige Verbindungsdetails
+    \item Bluetooth- und WLAN-Geräte in der Nähe
+    \item letzte bekannte Standorte
+\end{itemize}
 
 Informationen, die sich schnell ändern können, wie Verbindungsdetails und -stärken, der letzte Standort und
-einen aktuellen Zeitstempel soll die BC alle 1-5 Sekunden bereitstellen können.
-%%
-Batteriestatus, Temperatur und Speicherplatz die zum Überwachen des Gerätezustands wichtig sind, sollten alle 30 Sekunden aktualisiert werden.
-%%
-Einmalig zum Start der Software werden Versions- und Identifikationsnummern benötigt.
-%%
-Da diese Angaben sich während des Betriebs nicht ändern können.
-%%
+einen aktuellen Zeitstempel sollen alle 1-5 Sekunden, von der die Body-Cam abgefragt werden können.
+Batteriestatus, Temperatur und Speicherplatz die zum Überwachen des Gerätezustands wichtig sind, sollten alle 30 Sekunden zur Verfügung stehen.
+Einmalig zum Start der Software werden Versions- und Identifikationsnummern benötigt, da diese Angaben sich während des Betriebs nicht ändern können.
 
-Damit die BC dem Lone-Worker während aktiven Lone-Workers-Modus einen Alarmfall mitteilen kann,
-muss es die Möglichkeit geben die Lautsprecher, den Vibrationsmechanismus sowie die LEDs ansteuern zu können.
-%%
-Dies wird benötigt um akustische, haptische und visuelle Alarmmeldungen an den Lone-Worker weiterzureichen.
-%%
+Der Lone-Worker-Modus muss im Alarmfall die Lautsprecher, den Vibrationsmechanismus sowie die LEDs ansteuern können.
+Dies wird benötigt um die akustischen, haptischen und visuellen Alarmmeldungen an den Lone-Worker weiterzureichen.
 Der Lautsprecher wird neben dem Abspielen von Alarmtönen noch für das Abspielen von Audionachrichten verwendet.
-%%
-Außerdem soll es möglich seine Informationen auf dem Display anzuzeigen.
-%%
-Dies findet Anwendung für Textnachrichten vom Überwachungszentrum oder Alarmursachen.
-%%
-Bei letzterem kann der Lone-Worker nach einem Alarm mehr Informationen über die Art der Warnung bekommen.
-%%
-Beispielsweise ob und welcher Gerätefehler vorliegt oder wie lange eine Mobilfunkverbindung schon getrennt ist.
-%%
+Das Display wird wie in \autoref{fig:BC_schema} gezeigt für das Anzeigen von Statusinformationen genutzt.
+Auf dem freien Platz in der Mitte soll der Lone-Worker-Modus die Möglichkeit haben eigene Informationen anzuzeigen.
+Das sind zum Beispiel, der aktuelle Zustand des Modus, Textnachrichten des Überwachungszentrums oder Alarmursachen.
 
-Der Lone-Worker-Modus muss die Möglichkeit haben den Video- und Audiostream der Bodycam zu aktivieren.
-%%
-Auf Anfrage des Überwachungszentrums soll die Body-Cam die beiden Streams über eine gesicherte Verbindung zur Verfügung stellen,
-damit das Center den Lone-Worker bei Bedarf live überwachen kann.
-%%
+Der Lone-Worker-Modus muss die Möglichkeit haben Kamera und Mikrofon in Verbindung mit dem Video- und Audiostream zu aktivieren.
+Auf Anfrage des Überwachungszentrums soll die Body-Cam die beiden Streams über eine gesicherte Verbindung zur Verfügung stellen.
 Außerdem soll dies nach selbem Schema auch für die Zweiwege-Audio-Verbindung vollzogen werden.
-%%
-Dies dient dazu, eine aktive Sprachverbindung zwischen Überwachungszentrum und Lone-Worker zu realisieren, damit im Gefahrenfall schnell reagiert
-und Informationen ausgetauscht werden können.
-%%
+Diese realisiert eine aktive Sprachverbindung zwischen Operator und Lone-Worker.
 
-\pagebreak
+% \pagebreak
 
 \section{Statemachine}
 
@@ -241,6 +198,8 @@ In diesem wird gezeigt, wie nach einer erfolgreichen Verbindung, eine Schleife d
 Das Diagramm stellt den Programmablauf dar, um Anfragen vom Server zu beantworten oder eigene Anfragen, die von der Body-Cam gestellt werden, an den Server zu senden.
 Außerdem wie eine mögliche Warteliste mit Nachrichten-Timeouts in den Ablauf mit eingebunden werden kann.
 Dieser soll sicherstellen, dass die über die Schnittstellen gestellten Anfragen von der Body-Cam an den Lone-Worker-Modus, in endlicher Zeit beantwortet werden können.
+Im \autoref{anhang:anhang:zustandsdiagram_server} befindet sich das Zustandsdiagramm für die Server-Seite.
+Es unterscheidet sich nur geringfügig von dem des Clients und wird deshalb hier nicht weiter vertieft.
 
 \begin{figure}[h]
     \centering

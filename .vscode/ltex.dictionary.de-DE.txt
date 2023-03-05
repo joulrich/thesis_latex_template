@@ -1,2 +1,4 @@
 Isolationsgefühl
 Isolationsgefühls
+Lone-Worker
+Lone-Worker-Modus
