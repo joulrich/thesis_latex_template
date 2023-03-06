@@ -34,10 +34,6 @@ Im Gegensatz dazu bedeutet asynchron, dass der Sender die Daten ohne Bestätigun
 Das heißt, der Empfänger blockiert nicht den Prozess und akzeptiert Daten, sobald sie eintreffen.
 % reicht ZItat unten oder an jeden Absatz
 
-Synchron und asynchron sind zwei grundlegende Arten der Kommunikation in der Netzwerkprogrammierung.
-Synchron bedeutet, dass die Kommunikation zwischen Client und Server blockierend ist, das heißt, der Client wartet auf eine Antwort vom Server, bevor er mit der Ausführung seines Codes fortfahren kann.
-Asynchron bedeutet hingegen, dass die Kommunikation nicht blockierend ist, das heißt, der Client kann seine Arbeit fortsetzen, während er auf eine Antwort vom Server wartet.
-
 In einer synchronen Kommunikation sendet der Client eine Anfrage an den Server und wartet, bis der Server eine Antwort zurücksendet.
 Der Client blockiert in dieser Zeit und kann nicht auf andere Anfragen oder Ereignisse reagieren.
 Wenn der Server lange braucht, um auf die Anfrage zu antworten oder eine Fehlermeldung zurückgibt, blockiert der Client weiterhin.
@@ -140,13 +136,162 @@ Im Fall eines detektierten Verlustes wird nach dem gleichen Prinzip vorgegangen 
 Das gewährleistet einen sauberen Wiederaufbau ohne mögliche Artefakte aus älteren Verbindungen.
 
 %Nachrichten klasse zeigen
+\begin{lstlisting}[caption={Nachrichtenklasse im Prototypen},captionpos=b,language=C++,label=messageklasse]
+class WebsocketMessage
+{
+    rapidjson::Document msg;
+
+    std::string makeCurrentTimestamp() const
+    {
+        std::time_t const now = std::time(0);
+        struct tm * p = localtime(&now);
+        char ts[1000];
+        std::strftime(ts, 1000, "%T [ %A %d %B %Y ]", p);
+        return static_cast<std::string>(ts);
+    }
+
+public:
+    WebsocketMessage()
+    {
+        msg.SetObject();
+        rapidjson::Value v;
+        v.SetString(makeCurrentTimestamp().c_str(), msg.GetAllocator());
+        msg.AddMember("creationTimestamp", v, msg.GetAllocator());
+        msg.AddMember("referenceNumber", rapidjson::Value(), msg.GetAllocator());
+        msg.AddMember("typ", rapidjson::Value(), msg.GetAllocator());
+        msg.AddMember("data", rapidjson::Value(), msg.GetAllocator());
+        msg.AddMember("responseReferenceNumber",
+                        rapidjson::Value(), msg.GetAllocator());
+    }
+
+    WebsocketMessage(std::string msgAsString)
+    {
+        msg.SetObject();
+        msg.Parse(msgAsString.c_str());
+        if (msg.HasParseError())
+            throw std::invalid_argument("ERROR ParseJson");
+            // std::cout << "ERROR ParseJson: " << d.GetParseError() << std::endl;
+    }
+
+    WebsocketMessage(WebsocketMessage const &obj) {
+        msg.CopyFrom(obj.msg, msg.GetAllocator());
+    }
+
+    WebsocketMessage& operator=(WebsocketMessage const &obj){
+        return *this;
+    }
+
+    bool isMsgTypHeartbeat() const { return msg["typ"] == "heartbeat"; }
+
+    int getReferenceNumber() const
+        { return msg["referenceNumber"].GetInt(); }
+    std::string getMsgCreationTimestamp() const
+        { return msg["creationTimestamp"].GetString(); }
+    std::string getMsgTyp() const
+        { return msg["typ"].GetString(); }
+    std::string getMsgData() const
+        { return msg["data"].GetString(); }
+    int getResponseReferenceNumber() const
+        { return msg["responseReferenceNumber"].GetInt(); }
+    std::string getMsgAsString() const
+    {
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+        msg.Accept(writer);
+        return buffer.GetString();
+    }
+
+    void setReferenceNumber(int referenceNumber)
+        { msg["referenceNumber"] = referenceNumber; }
+    void setMsgTyp(std::string msgTyp)
+        { msg["typ"].SetString(msgTyp.c_str(), msg.GetAllocator()); }
+    void setMsgData(std::string msgData)
+        { msg["data"].SetString(msgData.c_str(), msg.GetAllocator()); }
+    void setResponseReferenceNumber(int responseReferenceNumber)
+        { msg["responseReferenceNumber"] = responseReferenceNumber; }
+
+    void setInitialMsgParameter(int referenceNumber, std::string msgTyp,
+                                std::string msgData)
+    {
+        setReferenceNumber(referenceNumber);
+        setMsgTyp(msgTyp);
+        setMsgData(msgData);
+    }
+};
+\end{lstlisting}
+
 Die komplette Kommunikation zwischen dem Lone-Worker-Feature der Body-Cam und dem Überwachungszentrum findet über das in \autoref{chap:protokolldesign} beschriebene Protokoll statt.
-Dabei wird auf beiden Seiten jede Nachricht mit einer eindeutigen Nummer versehen.
+Dabei wird auf beiden Seiten jede Nachricht mit einer eindeutigen Nummer versehen, die im Code als referenceNumber zu finden ist.
 Diese ermöglicht es die Nachrichten zu verfolgen und gezielte Antworten auf Anfragen zu erzeugen.
 Durch den einfachen strukturierten Aufbau des Protokolls im JSON-Format, kann es sowohl für die wenigen Funktionen des Prototyps verwendet werden, als auch für alle späteren Funktionen des Lone-Worker-Modus sehr leicht angepasst werden.
-Die oben gezeigte Nachrichtenklasse lässt sich mit wenig Arbeit so erweitern, dass verschiedene Statusinformationen oder Anfragen zur Bereitstellung der Streams problemlos vom Client bereitgestellt werden können.
+Die in \autoref{messageklasse} gezeigte WebsocketMessage-Klasse lässt sich mit wenig Arbeit so erweitern, dass verschiedene Statusinformationen oder Anfragen zur Bereitstellung der Streams problemlos vom Client bereitgestellt werden können.
+Durch den Einsatz der rapidjson Bibliothek lassen sich, wie im Konstruktor demonstriert, alle benötigten Felder anlegen.
+Innerhalb des Programmes kann der Nachrichteninhalt, wie beispielsweise in den Getter- und Setter-Methoden gezeigt, mit wenig Aufwand ausgelesen oder verändert werden.
 
-% Weitere wichtige Codestellen zum beschreiben finden?
+\begin{lstlisting}[caption={Asynchrone Read-Funktion},captionpos=b,language=C++,label=async_read]
+void
+session::do_read()
+{
+    ws_.async_read(buffer_,
+    [self{shared_from_this()}](beast::error_code ec,
+                                std::size_t bytes_transferred){
+        if (ec) {
+            self->fail(ec, "read");
+            return;
+        }
+        // reset timer
+        self->hbTimer_.expires_after(std::chrono::milliseconds(2000));
+
+        WebsocketMessage msgIn(beast::buffers_to_string(self->buffer_.data()));
+        self->buffer_.clear();
+
+        // if msg a heartbeat -> write heartbeat back
+        // else move msg in queue for request handling
+        if (msgIn.isMsgTypHeartbeat()) {
+            std::cout << msgIn.getMsgData() << std::endl;
+            self->writeMessageToServer("heartbeat", "HEARTBEAT vom Client");
+        }
+        else {
+            self->msgQueues_.msgInQueue.enqueue(std::move(msgIn));
+        }
+
+        self->do_read();
+    });
+}
+\end{lstlisting}
+
+In \autoref{async_read} ist zu sehen wie der Client den Eingang von Nachrichten behandelt.
+Als Erstes wird nach dem Aufruf des Handlers, in Form einer Lambda-Funktion, der Timer zurückgesetzt.
+Die ankommenden Daten werden in das JSON-Format geparst.
+Anschließend wird der Typ der Nachricht ausgewertet.
+Handelt es sich um einen Heartbeat, wird dieser umgehend vom Client erwidert.
+Andernfalls wird die Nachricht, für die spätere Bearbeitung, in die Empfangs-Queue übertragen.
+Zum Schluss ruft die Funktion sich selber auf, um weitere Daten zu empfangen.
+
+\begin{lstlisting}[caption={Heartbeat Timer},captionpos=b,language=C++,label=hbtimer]
+void
+session::on_hbTimer(boost::system::error_code ec)
+{
+    if(ec && ec != boost::asio::error::operation_aborted)
+        return fail(ec, "hbTimer");
+
+    if(hbTimer_.expiry() <= std::chrono::steady_clock::now()){
+        return fail(ec, "TIMEOUT HEARTBEATTIMER!");
+    }
+
+    // Wait on the timer
+    hbTimer_.async_wait(
+    beast::bind_front_handler(
+            &session::on_hbTimer,
+            shared_from_this())
+    );
+}
+\end{lstlisting}
+
+Der Code in \autoref{hbtimer} zeigt die Implementierung des Timer.
+Kommt es zum erfolgreichen Empfangen einer Nachricht, wird er in der eben gezeigten Read-Funktion durch den Aufruf von \glqq expires\underline{ }after\grqq{} neu gestartet.
+Der aktuelle Timer bricht mit dem Fehlercode \glqq operation aborted\grqq{} ab.
+Kommt es nicht zum Abbruch, löst der Timer nach zwei Sekunden aus.
 
 Aufgrund der begrenzten Ressourcen, die ein Embedded-Gerät wie die Body-Cam zur Verfügung hat sowie die Anforderung an das Überwachungszentrum mehrere Clients gleichzeitig zu verwalten, müssen Performance und Skalierbarkeit berücksichtigt werden.
 Aus diesem Grund wurden bereits während der Designphase Entscheidungen getroffen, die in den Prototypen einfließen.
