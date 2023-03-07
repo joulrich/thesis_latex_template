@@ -8,21 +8,20 @@ Nach der Planungs- und Designphase wird nun die Realisierung des Projekts behand
 
 \section{Technologien und technische Grundlagen}\label{chap:technologien}
 
-Das neue Lone-Worker Feature der Body-Cam erfordert eine dauerhafte, bidirektionale Verbindung zwischen Body-Cam als Client und Überwachungszentrum als Server.
+Das neue Lone-Worker-Feature der Body-Cam erfordert eine dauerhafte, bidirektionale Verbindung zwischen Body-Cam als Client und Überwachungszentrum als Server.
 Die Kommunikation soll dabei in Echtzeit ablaufen.
-Für diese Anforderungen reichen einfache HTTP-Anfragen nicht aus.
-Da diese keine dauerhafte und bidirektionale Kommunikation ermöglichen können.
-Um dieses Problem zu beheben wurde das Websocket-Protokoll entwickelt.
+Für diese Anforderungen reichen einfache HTTP-Anfragen nicht aus, da diese keine dauerhafte und bidirektionale Kommunikation ermöglichen können.
+Um dieses Problem zu beheben wurde das WebSocket-Protokoll entwickelt.
 Im Gegensatz zu traditionellen HTTP-Anfragen, die eine neue Verbindung zum Server für jede Anfrage öffnen und schließen, ermöglichen WebSockets eine dauerhafte Verbindung.
-Diese ermöglicht es Daten in Echtzeit zu senden und zu empfangen.
+Diese ermöglicht es, Daten in Echtzeit zu senden und zu empfangen.
 Darüber hinaus unterstützen WebSockets auch bidirektionale Kommunikation.
 Das bedeutet, dass sowohl der Client als auch der Server Daten senden und empfangen können.
 Dies ist ideal für Anwendungen wie Multiplayer-Spiele, Chat-Anwendungen oder Echtzeit-Kommunikation, bei denen schnelle und zuverlässige Kommunikation zwischen dem Client und dem Server von entscheidender Bedeutung ist.
 Ein weiterer Vorteil von WebSockets ist, dass sie von vielen modernen Browsern und Webanwendungen nativ unterstützt werden.
-Dadurch wird die Implementierung der Client-Seite erleichtert, welche sich nicht um die Verwaltung von Verbindungs- oder Datenübertragungsdetails kümmern muss. \cite[vgl. S.4f]{WebsocketProtokoll}
+Dadurch wird die Implementierung der Client-Seite erleichtert, welche sich nicht um die Verwaltung von Verbindungs- oder Datenübertragungsdetails kümmern muss. \cite[vgl.~S.~4f][]{WebsocketProtokoll}
 
 Für die Sicherheit des Lone-Worker ist eine stabile und dauerhafte Verbindung zum Überwachungszentrum von großer Bedeutung.
-Es muss ein Verbindungsabbruch schnell festgestellt werden sowie eine Vielzahl von Anfragen bearbeitet werden, um aktuelle Informationen jederzeit bereitzustellen.
+Es muss ein Verbindungsabbruch schnell festgestellt sowie eine Vielzahl von Anfragen bearbeitet werden, um aktuelle Informationen jederzeit bereitzustellen.
 Ein Überwachungszentrum ist potenziell mit mehreren Clients verbunden, sodass hier eine effiziente Ressourcennutzung wichtig ist.
 Um diesen Anforderungen gerecht zu werden, wurde als Grundgerüst der Kommunikation das Websocket-Protokoll gewählt.
 
@@ -40,18 +39,18 @@ Wenn der Server lange braucht, um auf die Anfrage zu antworten oder eine Fehlerm
 In einer asynchronen Kommunikation sendet der Client eine Anfrage an den Server und setzt seine Arbeit fort, während er auf die Antwort wartet.
 Der Client kann mehrere Anfragen gleichzeitig senden und auf die Antworten warten, wenn sie verfügbar sind.
 Bei längeren Antwortzeiten oder einer Fehlermeldung kann der Client weiterhin arbeiten und auf andere Ereignisse reagieren
-\cite[vgl. S.1-3]{lim2019directly}.
+\cite[vgl.~S.~1-3][]{lim2019directly}.
 
-Aufgrund der begrenzten Ressourcen der Body-Cam als Embedded-Gerät sowie der Möglichkeit, das sich mehrere Clients mit dem Überwachungszentrum verbinden können, wird die asynchrone Kommunikation verwendet.
+Aufgrund der begrenzten Ressourcen der Body-Cam als Embedded-Gerät sowie der Möglichkeit, dass sich mehrere Clients mit dem Überwachungszentrum verbinden können, wird die asynchrone Kommunikation verwendet.
 Diese bietet mehrere Vorteile, wie Skalierbarkeit, Effizienz, Robustheit und Flexibilität.
-So kann der Server mit einem Thread mehrere Clients bedienen ohne das die Leistung beeinträchtigt wird, da für jede Anfrage kein separater Thread oder Prozess benötigt wird.
-Der Client muss nicht auf die Antwort des Servers warten um mit der nächsten Aufgabe fortzufahren.
+So kann der Server mit einem Thread mehrere Clients bedienen ohne, dass die Leistung beeinträchtigt wird, da für jede Anfrage kein separater Thread oder Prozess benötigt wird.
+Der Client muss nicht auf die Antwort des Servers warten, um mit der nächsten Aufgabe fortzufahren.
 Damit kann er mehrere Anfragen gleichzeitig versenden und auf die Antworten reagieren, wenn diese verfügbar sind.
 Das steigert die Effizienz auf beiden Seiten der Verbindung.
 Im Fehlerfall kann der Client weiterarbeiten und wird nicht durch einen Serverfehler blockiert.
-Außerdem ist es damit auch Möglichkeit das Daten gesendet werden können, ohne eine direkte Antwort zu erwarten.
-Das ist beispielsweise von Vorteil bei der Implementierung eines Heartbeat zwischen Client und Server
-\cite[vgl.]{whyAsync,thinkAsync}.
+Außerdem ist es damit auch möglich, dass Daten gesendet werden können, ohne eine direkte Antwort zu erwarten.
+Das ist beispielsweise von Vorteil bei der Implementierung eines Heartbeats zwischen Client und Server
+\cite[]{whyAsync,thinkAsync}.
 
 Für eine dauerhafte und zuverlässige Verbindung zwischen Body-Cam und Überwachungszentrum wird ein Mechanismus benötigt, der einen Verbindungsabbruch in kurzer Zeit feststellt.
 Diese Möglichkeit wird von Mobilfunk oder WLAN nativ nicht zur Verfügung gestellt.
@@ -59,33 +58,32 @@ Aus diesem Grund wurde für die Kommunikation im Prototypen ein Heartbeat-Mechan
 
 Heartbeats sind spezielle Signale, die in der Regel zwischen Client- und Server-Anwendungen ausgetauscht werden.
 Sie stellen sicher, dass die Verbindung zwischen den beiden Parteien aktiv und stabil bleibt.
-Diese Signale können beispielsweise als "Herzschlag" der Verbindung betrachtet werden.
-Damit wird gezeigt das die Verbindung immer noch lebt und das die beteiligten Parteien bereit sind Daten auszutauschen.
+Diese Signale können beispielsweise als \glqq Herzschlag\grqq{} der Verbindung betrachtet werden.
+Damit wird gezeigt, dass die Verbindung immer noch besteht und dass die beteiligten Parteien bereit sind Daten auszutauschen.
 In der Regel werden Heartbeats in bestimmten Zeitintervallen gesendet, um sicherzustellen, dass die Verbindung nicht ausfällt oder unterbrochen wird.
 Wenn ein Client beispielsweise über längere Zeit keine Daten an den Server sendet, könnte der Server fälschlicherweise annehmen, dass die Verbindung unterbrochen wurde, und die Verbindung trennen.
 Durch das regelmäßige Senden von Heartbeats kann dies verhindert werden.
-Ebenfalls kann dadurch bei Netzwerkproblemen schnell festgestellt werden das die Verbindung zwischen beiden Parteien gestört ist.
-Sie tragen damit dazu bei, dass die Verbindung bei Bedarf automatisch wiederhergestellt wird und die Zuverlässigkeit erhöht wird.
+Ebenfalls kann dadurch bei Netzwerkproblemen schnell festgestellt werden, dass die Verbindung zwischen beiden Parteien gestört ist.
+Sie tragen damit dazu bei, dass die Verbindung bei Bedarf automatisch wiederhergestellt und die Zuverlässigkeit erhöht wird.
 Für das Lone-Worker Feature sind sie also wichtig, um dauerhaft eine Verbindung zwischen Client und Server aufrechtzuerhalten und ermöglichen dadurch eine effiziente und zuverlässige Kommunikation zwischen den beiden Parteien.
-\textcolor{red}{QUELLE suchen}.
 
 \section{Entwicklungsprozess}
 
-Für die Umsetzung und Implementierung den Prototypen wurde ein agiler Entwicklungsprozess genutzt.
+Für die Umsetzung des Prototyps wurde ein agiler Entwicklungsprozess genutzt.
 Dafür wurden kontinuierliche Iterationen über alle Phasen des Projekts verwendet.
 Als Erstes wurde überlegt, wie die bestehende Body-Cam an die Aufgabe der Überwachung bei Alleinarbeit angepasst werden kann.
 Diese Anpassungen wurden als Anforderungen aufgeschrieben und in mehreren Iterationen weiter ausgeführt und verbessert.
 Anschließend wurden konkrete Funktionen herausgearbeitet, die durch den neuen Lone-Worker-Modus abgedeckt werden sollen.
 Es wurden verschiedene Statemachines entwickelt, die einen ersten Programmablauf beschreiben.
-Dieser ging über Verbindungsaufbau, -abbau und -wiederherstellung, den Umgang mit ein- und ausgeheden Nachrichten sowie der Einbindung in die bereits bestehende Body-Cam Implementierung.
+Dieser ging über Verbindungsaufbau, -abbau und -wiederherstellung, den Umgang mit ein- und ausgehenden Nachrichten sowie der Einbindung in die bereits bestehende Body-Cam.
 Danach wurde das Protokoll für die Kommunikation zwischen Gerät und Überwachungszentrum sowie die Primitiven zwischen Body-Cam und Lone-Worker-Modus herausgearbeitet.
-Nach der Designphase begann die Implementierung.
-Hier wurde sich als Erstes anhand der Anforderungen und gegebenen Technologien der bestehenden Implementierung für die Technologien aus Kapitel \autoref{chap:technologien} entschieden.
+Nach der Designphase begann die Umsetzung.
+Hier wurde sich als Erstes anhand der Anforderungen und gegebenen Technologien der bestehenden Implementierung für die in Kapitel \autoref{chap:technologien} beschriebenen Technologien entschieden.
 Außerdem wurde im Rahmen der Arbeit die Implementierung des Lone-Worker-Modus auf die Grundfunktionalität des Verbindungsaufbaus, -abbaus und -wiederherstellung begrenzt.
 Einzelheiten zur konkreten Umsetzung folgen im nächsten Kapitel.
 
-Zur Entwicklung des Prototyps kam die Programmiersprache C++ sowie ein Linux Ubuntu 20.04 LTS zum Einsatz.
-Auf diesem wurden dann alle nötigen Bibliotheken gebaut und mithilfe von CMake eine Projektstruktur entworfen.
+Zur Entwicklung des Prototyps kam die Programmiersprache C++ sowie das Betriebssystem Linux Ubuntu 20.04 LTS zum Einsatz.
+Auf diesem wurden dann alle nötigen Bibliotheken gebaut und mithilfe von dem Buildmanagement-System CMake eine Projektstruktur entworfen.
 Die wichtigsten Bibliotheken sind die Boost-Sammlung, insbesondere Boost-Beast und Boost-Asio für die WebSockets-Verbindung sowie die \glqq rapidjson\grqq{} Bibliothek als JSON-Parser.
 CMake kümmert sich außerdem im Prozess des Compiling und Linking um die Verwaltung und Übersetzung der verschiedenen Quelldateien
 sowie die Einbindung und Verknüpfung der Header und Bibliotheken.
@@ -98,22 +96,22 @@ Zur Versionsverwaltung wurde Git genutzt, mit einem eigenen Repository auf GitHu
 Im praktischen Teil der Bachelorarbeit wurde der Prototyp einer Client-Server-Verbindung implementiert.
 Das Hauptaugenmerk lag dabei auf der Umsetzung der Client-Seite.
 Konkret wurde eine Kommunikationsbibliothek programmiert, die später in den Code der vorhanden Body-Cam eingebunden werden kann.
-Sie erweitert die bestehende Implementierung um das Lone-Worker Feature.
+Sie erweitert die bestehende Implementierung um das Lone-Worker-Feature.
 Über die in \autoref{chap:primitiven} beschriebenen Schnittstellen kann die Body-Cam den neuen Lone-Worker-Modus ansteuern.
 
 Die Body-Cam fungiert als Client.
 Sobald der Träger die Kamera einschaltet versucht sie sich mit dem Überwachungszentrum zu verbinden, welches vorher konfiguriert werden muss.
 Die Aufgaben des Clients beinhalten:
 \begin{itemize}
-    \item Initialisierung der Lone-Worker-Verbindung zum Überwachungszentrum
-    \item Halten einer dauerhaften und stabilen Verbindung zum Server
-    \item Wiederherstellung der Kommunikation nach Verbindungsverlust
-    \item Schnelle Beantwortung aller Anfragen vom Server
+    \item Initialisierung der Lone-Worker-Verbindung zum Überwachungszentrum,
+    \item Halten einer dauerhaften und stabilen Verbindung zum Server,
+    \item Wiederherstellung der Kommunikation nach Verbindungsverlust,
+    \item Schnelle Beantwortung aller Anfragen vom Server.
 \end{itemize}
 
 Das Überwachungszentrum repräsentiert die Server-Seite.
 Sie wartet auf eingehende Verbindungen von Body-Cams und schickt nach dem Verbindungsaufbau in regelmäßigen Abständen Anfragen oder Heartbeats an den Client.
-Im Fall das die beiden Seiten nach einer konfigurierbaren Zeitspanne keine neuen Nachrichten von der Gegenseite feststellen, wird eine Fehlermeldung ausgegeben.
+Im Fall, dass die beiden Seiten nach einer konfigurierbaren Zeitspanne keine neuen Nachrichten von der Gegenseite feststellen, wird eine Fehlermeldung ausgegeben.
 Diese Meldung ist der spätere Alarm, den die beiden Seiten bei einem Verbindungsausfall bekommen.
 
 Der Verbindungsaufbau erfolgt über das Websocket-Protokoll.
@@ -122,21 +120,21 @@ Dafür werden die asynchronen Methoden aus der Boost-Beast-Bibliothek verwendet.
 Als Erstes wird mit einem \glqq async\underline{ }resolve\grqq{} sowie der URL und dem Port die IP-Adresse des Servers ermittelt.
 Danach wird mit einem \glqq async\underline{ }connect\grqq{} die Verbindung aufgebaut und über die Methode \glqq async\underline{ }handshake\grqq{} das Handshake-Verfahren durchgeführt.
 Nach dieser Prozedur können Server und Client über asynchrone Lese- und Schreibmethoden Nachrichten austauschen.
-Im Fehlerfall, wenn beispielsweise der Server nicht erreichbar ist oder das Handshaking-Verfahren fehlschlägt wird die Verbindung beendet.
+Im Fehlerfall, wenn beispielsweise der Server nicht erreichbar ist oder das Handshaking-Verfahren fehlschlägt, wird die Verbindung beendet.
 Das Verbindungsobjekt wird verworfen und nach einer kurzen Verzögerung wird ein erneuter Verbindungsversuch gestartet.
-Es kommt zum Alarmfall, wenn keine vollständige Verbindung in einer vorher festgelegten Zeit hergestellt werden kann.
+Es kommt zum Alarmfall, wenn keine vollständige Verbindung innerhalb von 15~Sekunden hergestellt werden kann.
 
 Nachdem eine vollständige Verbindung zwischen Client und Server hergestellt ist, werden vom Server regelmäßig Telegramme an den Client versendet.
 Diese Nachrichten sind entweder Anfragen auf beispielsweise Statusinformationen, Standortdaten und Streams oder Heartbeats.
 Beim Empfangen einer Nachricht auf Client-Seite wird der Timer, der einen Verbindungsverlust feststellt zurückgesetzt.
-Anschließend beantwortet der Client das Telegram.
+Anschließend beantwortet der Client das Telegramm.
 Der Server-Timer wird ebenfalls neu gestartet, wenn der Server die Antwort registriert.
 Mit diesem Vorgehen soll sichergestellt werden, dass ein Verbindungsverlust rechtzeitig erkannt wird und eine schnelle Wiederherstellung der Verbindung vorgenommen werden kann.
 Im Fall eines detektierten Verlustes wird nach dem gleichen Prinzip vorgegangen wie bei einem Fehlerfall im Verbindungsaufbau.
 Das gewährleistet einen sauberen Wiederaufbau ohne mögliche Artefakte aus älteren Verbindungen.
 
 %Nachrichten klasse zeigen
-\begin{lstlisting}[caption={Nachrichtenklasse im Prototypen},captionpos=b,language=C++,label=messageklasse]
+\begin{lstlisting}[caption={[Nachrichtenklasse im Prototypen]Nachrichtenklasse im Prototypen \lbrack eigene Darstellung\rbrack},captionpos=b,language=C++,label=messageklasse]
 class WebsocketMessage
 {
     rapidjson::Document msg;
@@ -223,12 +221,12 @@ public:
 Die komplette Kommunikation zwischen dem Lone-Worker-Feature der Body-Cam und dem Überwachungszentrum findet über das in \autoref{chap:protokolldesign} beschriebene Protokoll statt.
 Dabei wird auf beiden Seiten jede Nachricht mit einer eindeutigen Nummer versehen, die im Code als referenceNumber zu finden ist.
 Diese ermöglicht es die Nachrichten zu verfolgen und gezielte Antworten auf Anfragen zu erzeugen.
-Durch den einfachen strukturierten Aufbau des Protokolls im JSON-Format, kann es sowohl für die wenigen Funktionen des Prototyps verwendet werden, als auch für alle späteren Funktionen des Lone-Worker-Modus sehr leicht angepasst werden.
+Durch den einfachen strukturierten Aufbau des Protokolls im JSON-Format kann es sowohl für die wenigen Funktionen des Prototyps verwendet werden als auch für alle späteren Funktionen des Lone-Worker-Modus sehr leicht angepasst werden.
 Die in \autoref{messageklasse} gezeigte WebsocketMessage-Klasse lässt sich mit wenig Arbeit so erweitern, dass verschiedene Statusinformationen oder Anfragen zur Bereitstellung der Streams problemlos vom Client bereitgestellt werden können.
 Durch den Einsatz der rapidjson Bibliothek lassen sich, wie im Konstruktor demonstriert, alle benötigten Felder anlegen.
 Innerhalb des Programmes kann der Nachrichteninhalt, wie beispielsweise in den Getter- und Setter-Methoden gezeigt, mit wenig Aufwand ausgelesen oder verändert werden.
 
-\begin{lstlisting}[caption={Asynchrone Read-Funktion},captionpos=b,language=C++,label=async_read]
+\begin{lstlisting}[caption={[Asynchrone Read-Funktion]Asynchrone Read-Funktion \lbrack eigene Darstellung\rbrack},captionpos=b,language=C++,label=async_read]
 void
 session::do_read()
 {
@@ -268,7 +266,7 @@ Handelt es sich um einen Heartbeat, wird dieser umgehend vom Client erwidert.
 Andernfalls wird die Nachricht, für die spätere Bearbeitung, in die Empfangs-Queue übertragen.
 Zum Schluss ruft die Funktion sich selber auf, um weitere Daten zu empfangen.
 
-\begin{lstlisting}[caption={Heartbeat Timer},captionpos=b,language=C++,label=hbtimer]
+\begin{lstlisting}[caption={[Heartbeat Timer]Heartbeat Timer \lbrack eigene Darstellung\rbrack},captionpos=b,language=C++,label=hbtimer]
 void
 session::on_hbTimer(boost::system::error_code ec)
 {
@@ -297,9 +295,9 @@ Aufgrund der begrenzten Ressourcen, die ein Embedded-Gerät wie die Body-Cam zur
 Aus diesem Grund wurden bereits während der Designphase Entscheidungen getroffen, die in den Prototypen einfließen.
 Darunter fallen:
 \begin{itemize}
-    \item Verwendung von C++ als performante und effiziente Sprache
+    \item Verwendung von C++ als performante Sprache
     \item Einsatz von wenigen und schnellen Bibliotheken wie \glqq rapidjson\grqq{}
-    \item Gebrauch des WebSocket-Protokolles
+    \item Gebrauch des WebSocket-Protokolls
     \item Nutzung der asynchronen gegenüber der synchronen Kommunikation
 \end{itemize}
 
@@ -308,15 +306,15 @@ Speziell der Einsatz des asynchronen Konzepts erforderte ein hohes Maß an Einar
 Durch die Komplexität des nicht-linearen Programmablaufs gestaltet sich das Debugging als anspruchsvolle Aufgabe, welches aufwendigere Maßnahmen zur Fehlerbehebung erforderlich machte.
 % hier vllt. ein Vermerk auf einen Text im Anhang machen der genauere Probleme zeigte ehemalige Herausforderungen
 
-\section{Testprotokoll}
+\section{Ergebnisse}
 
-Im Kontext der vorliegenden Arbeit sowie der Anforderungen, die an ein PNA durch die DGUV gestellt werden, hat sich herausgestellt das die Stabilität und Zuverlässigkeit einen wesentlichen Bestandteil bilden.
+Im Kontext der vorliegenden Arbeit sowie der Anforderungen, die an eine PNA durch die DGUV gestellt werden, hat sich herausgestellt das die Stabilität und Zuverlässigkeit einen wesentlichen Bestandteil bilden.
 Der Verbindungsaufbau und -abbau sowie die saubere Wiederherstellung der Verbindung im Fehlerfall repräsentieren das Kernstück des Lone-Worker-Modus.
-Der im praktischen Teil der Arbeit entwickelte Prototyp implementiert diese Kernelemente.
-Aus diesem Grund soll durch ein Testprotokoll sichergestellt werden, dass der Anspruch an eine PNA für Alleinarbeit erfüllt wird.
+Der im praktischen Teil der Arbeit entwickelte Prototyp implementiert diese Kernelemente und umfasst damit die Kommunikationsbasis des Lone-Worker-Features.
+Aus diesem Grund soll der Prototyp durch ein Testprotokoll auf Stabilität und Funktionalität überprüft und sichergestellt werden, dass der Anspruch an eine PNA für Alleinarbeit erfüllt wird.
 
-Im \autoref{anhang:testprotokoll} befindet sich die Ausarbeitung eines für den Prototyp entwickeltes Testprotokoll.
-Es beschreibt verschiedene Testfälle mit den erforderlichen Voraussetzungen und Schritten sowie dem erwartenden Ergebnis.
+Im Folgenden befindet sich die Ausarbeitung eines für den Prototyp entwickeltes Testprotokolls.
+Es beschreibt verschiedene Testfälle mit den erforderlichen Voraussetzungen und Schritten sowie dem zu erwartenden Ergebnis.
 Die Testfälle beziehen sich auf die Kernelemente des Prototyps und umfassen den Verbindungsaufbau zwischen Client und Server,
 den Austausch von Heartbeats über das JSON-Protokoll sowie die Verbindungswiederherstellung.
 Bei letzterem Testfall gibt es eine Unterscheidung zwischen erfolgreicher und fehlerhafter Wiederherstellung.
@@ -325,13 +323,163 @@ Beim Eintritt eines Alarmfalls konnte keine Verbindung zwischen Body-Cam und Üb
 Die Wiederherstellung ist fehlgeschlagen und beide Seiten haben dies detektiert und teilen dies im Prototyp durch die Programmausgabe mit.
 Im späteren Szenarios wird diese Detektion an den Lone-Worker und den Operator weitergeleitet, damit diese über die unterbrochene Überwachung informiert sind.
 
-Jeder Testfall wurde mit dem implementierten Prototyp vollzogen und die Ergebnisse unter jedem Testfall notiert.
+Für den Test wurde der kompilierte Prototyp auf zwei Computer gebracht, die miteinander über eine LAN-Verbindung verbunden sind.
+Danach wurde wie im Testprotokoll als Voraussetzung angegeben der Server auf Port 8080 gestartet.
+Für jeden Testfall wurden die beschriebenen Schritte nacheinander ausgeführt und das Ergebnis aufgeschrieben.
+Durch die Programmausschriften auf der Kommandozeile ließen sich die einzelnen Abläufe gut nachvollziehen.
+Der Verbindungsabbruch in Test drei und vier wurde durch eine Firewall-Regel realisiert, die den Austausch von Paketen zwischen Client und Server temporär verhinderte.
+Dies soll einen späteren Verbindungsverlust durch beispielsweise Störungen im Mobilfunknetz simulieren.
 
-\section{Ergebnisse}
+\pagebreak
 
-Nach dem Planen und Designen des neuen Lone-Worker Feature für die Body-Cam, ist ein weiterer wichtiger Teil die Umsetzung eines Prototyps.
-Dieser umfasst die Kommunikationsbasis des Lone-Worker-Modus und verfügt über Verbindungsaufbau, -abbau, -wiederaufbau und Abbrucherkennung.
-Der Prototyp wurde im Rahmen des praktischen Teils dieser Arbeit implementiert und mit dem im vorherigen Kapitel entwickelten Testprotokoll, auf Stabilität und Funktionalität überprüft.
+\subsection*{Testprotokoll}\label{anhang:testprotokoll}
+
+\subsubsection*{Testfall 1: Verbindung herstellen}
+
+\textbf{Beschreibung:}\\
+Dieser Testfall überprüft, ob der Client erfolgreich eine Verbindung zum Server aufbauen kann. Der Client sendet eine Verbindungsanfrage an den Server und wartet auf einen erfolgreichen Handshake. Wenn die Verbindung erfolgreich hergestellt wurde, sendet der Client eine Initialnachricht an den Server, der diesen über die Timeoutzeit informiert.
+
+\textbf{Voraussetzungen:}
+\begin{itemize}
+    \item Der Server ist gestartet und lauscht auf Port 8080.
+    \item Der Client kann den Server über seine URL erreichen.
+\end{itemize}
+
+\textbf{Schritte:}
+\begin{enumerate}
+    \item Der Client wird mit den Parameter Server-URL und Port 8080 gestartet.
+    \item Der Client sendet eine Verbindungsanfrage an den Server.
+    \item Der Server antwortet mit einem Handshake-Antwortpaket, das die erfolgreiche\\ Handshake-Bestätigung der Websocket-Verbindung signalisiert.
+    \item Nach erfolgreichem Handshake sendet der Client eine Protokoll-Nachricht mit dem Typ \glqq initialMessage\grqq{} und der Timeoutzeit als Daten.
+\end{enumerate}
+
+\textbf{Erwartetes Ergebnis:}\\
+Die Websocket-Verbindung zwischen Client und Server ist hergestellt und beide Seiten haben die gleiche Timeoutzeit.
+
+\textbf{Ergebnis:}
+\begin{itemize}
+    \item Server ist gestartet und wartet auf eingehende Verbindung auf Port 8080.
+    \item Client wird gestartet und Verbindungsanfrage an Server wird festgestellt.
+    \item Handshake-Verfahren wird erfolgreich durchgeführt.
+    \item Beide Seiten sind miteinander verbunden.
+    \item Client sendet die \glqq initialMessage\grqq{} an den Server.
+    \item Server empfängt die Nachricht und setzt die Timeoutzeit auf zwei Sekunden.
+    \begin{lstlisting}[caption={[Beispiel einer Protokollnachricht vom Typ initialMessage]Beispiel einer Protokollnachricht vom Typ initialMessage \lbrack eigene Darstellung\rbrack},captionpos=b,language=json,firstnumber=1]
+        { "creationTimestamp":"11:26:02 [ Wednesday 01 March 2023 ]",
+        "referenceNumber":1,
+        "typ":"initialMessage",
+        "data":"2000",
+        "responseReferenceNumber":null }
+    \end{lstlisting}
+\end{itemize}
+
+\pagebreak
+
+\subsubsection*{Testfall 2: Heartbeat-Nachrichten senden}
+
+\textbf{Beschreibung:}\\
+Dieser Testfall überprüft, ob der Client und der Server in der Lage sind, erfolgreich Heartbeat-Nachrichten auszutauschen. Der Server sendet eine Nachricht an den Client und wartet auf eine Antwort. Wenn der Client die Nachricht empfängt, sendet er eine Antwort zurück. Beide Seiten setzen beim Empfangen einer Nachricht ihren Timer für Verbindungsverlust zurück.
+
+\textbf{Voraussetzungen:}
+\begin{itemize}
+    \item Der Client ist mit dem Server verbunden.
+    \item Der Server ist gestartet und lauscht auf Port 8080.
+\end{itemize}
+
+\textbf{Schritte:}
+\begin{enumerate}
+    \item Der Server sendet eine Heartbeat-Nachricht an den Client.
+    \item Der Client empfängt die Nachricht und detektiert sie als Heartbeat.
+    \item Der Client setzt seinen Timer zurück und schickt einen Heartbeat zurück an den Server.
+    \item Der Server empfängt die Nachricht und detektiert sie als Heartbeat.
+    \item Der Server setzt seinen Timer zurück.
+\end{enumerate}
+
+\textbf{Erwartetes Ergebnis:}\\
+Der Heartbeat wurde erfolgreich zwischen beiden Seiten ausgetauscht und der Timer für Verbindungsverlust wurde zurückgesetzt.
+
+\textbf{Ergebnis:}
+\begin{itemize}
+    \item Client und Server sind miteinander verbunden.
+    \item Server sendet eine Nachricht vom Typ Heartbeat an den Client.
+    \item Die Nachricht wird vom Client empfangen.
+    \item Der Timer für Verbindungsverlust (Clientseite) wird zurückgesetzt.
+    \item Der Client detektiert die Nachricht als Heartbeat und sendet daraufhin eine Nachricht vom Typ Heartbeat zurück.
+    \item Die Heartbeat-Nachricht wird vom Server empfangen.
+    \item Der Timer für Verbindungsverlust (Serverseite) wird zurückgesetzt.
+\end{itemize}
+
+\pagebreak
+
+\subsubsection*{Testfall 3: Verbindung wiederherstellen (erfolgreich)}
+
+\textbf{Beschreibung:}\\
+Dieser Testfall überprüft, ob der Client in der Lage ist, eine Verbindung zum Server wiederherzustellen, nachdem die Verbindung unterbrochen wurde. Der Client versucht, die Verbindung wiederherzustellen, nachdem die Verbindung unterbrochen wurde, und wartet auf eine Bestätigungsnachricht vom Server. Wenn die Verbindung erfolgreich wiederhergestellt wurde, können Nachrichten zwischen Client und Server ausgetauscht werden.
+
+\textbf{Voraussetzungen:}
+\begin{itemize}
+    \item Der Client ist mit dem Server verbunden.
+    \item Der Server ist gestartet und lauscht auf Port 8080.
+\end{itemize}
+
+\textbf{Schritte:}
+\begin{enumerate}
+    \item Die Verbindung zwischen Client und Server wird unterbrochen.
+    \item Der Client stellt durch das Ausbleiben von Heartbeats fest, dass die Verbindung unterbrochen ist.
+    \item Der Client versucht die Verbindung zum Server wieder herzustellen.
+    \item Der Server antwortet mit einem Handshake-Antwortpaket, das die erfolgreiche\\ Handshake-Bestätigung der Websocket-Verbindung signalisiert.
+    \item Beide Seiten tauschen Heartbeat-Nachrichten aus.
+\end{enumerate}
+
+\textbf{Erwartetes Ergebnis:}\\
+Die Websocket-Verbindung zwischen Client und Server wird erfolgreich wiederhergestellt.
+
+\textbf{Ergebnis:}
+\begin{itemize}
+    \item Client und Server sind miteinander verbunden.
+    \item Der Client erwartet einen Heartbeat vom Server, empfängt diesen aber innerhalb von 2 Sekunden nicht.
+    \item Die Verbindung wird zurückgesetzt und der Client versucht die Verbindung zum Server wieder herzustellen.
+    \item Der Server empfängt die Verbindungsanfrage vom Client.
+    \item Nach erfolgreichem Handshake sind beide Seiten wieder miteinander verbunden.
+    \item Server und Client können wieder erfolgreich Nachrichten austauschen.
+\end{itemize}
+
+\pagebreak
+
+\subsubsection*{Testfall 4: Verbindung wiederherstellen (nicht erfolgreich)}
+
+\textbf{Beschreibung:}\\
+Dieser Testfall überprüft, ob der Client in der Lage ist, eine Verbindung zum Server wiederherzustellen, nachdem die Verbindung unterbrochen wurde. Der Client versucht, die Verbindung wiederherzustellen, nachdem die Verbindung unterbrochen wurde, und wartet auf eine Bestätigungsnachricht vom Server. Die Verbindung kann nicht erfolgreich in einer bestimmten Zeit wiederhergestellt werden und es kommt zum Alarmfall.
+
+\textbf{Voraussetzungen:}
+\begin{itemize}
+    \item Der Client ist mit dem Server verbunden.
+    \item Der Server ist gestartet und lauscht auf Port 8080.
+\end{itemize}
+
+\textbf{Schritte:}
+\begin{enumerate}
+    \item Die Verbindung zwischen Client und Server wird unterbrochen.
+    \item Der Client stellt durch das Ausbleiben von Heartbeats fest, dass die Verbindung unterbrochen ist.
+    \item Der Client versucht die Verbindung zum Server wieder herzustellen.
+    \item Der Server antwortet nicht und die Verbindung bleibt unterbrochen.
+    \item Beide Seiten geben nach einer bestimmten Zeit aus, dass die Verbindung unterbrochen ist und eine dauerhafte Überwachung nicht sichergestellt werden kann.
+\end{enumerate}
+
+\textbf{Erwartetes Ergebnis:}\\
+Die Websocket-Verbindung zwischen Client und Server wird nicht erfolgreich wiederhergestellt. Beide Seiten teilen diesen Alarmfall über die Programmausgabe mit.
+
+\textbf{Ergebnis:}
+\begin{itemize}
+    \item Client und Server sind miteinander verbunden.
+    \item Der Client erwartet einen Heartbeat vom Server empfängt diesen aber innerhalb von 2 Sekunden nicht.
+    \item Die Verbindung wird zurückgesetzt und der Client versucht die Verbindung zum Server wieder herzustellen.
+    \item Der Client kann keine neue Verbindung zum Server aufbauen.
+    \item Nach 15 Sekunden erfolglosen Verbindungsversuchen benachrichtigt der Client über einen Verlust der Verbindung.
+    \item Es kommt somit zum Alarmfall
+\end{itemize}
+
+\pagebreak
 
 Die vier Testfälle wurden vom Prototyp erfolgreich absolviert.
 Er ist somit in der Lage eine Verbindung zwischen Body-Cam als Client und Überwachungszentrum als Server aufzubauen, zu halten und wiederherzustellen.
@@ -341,12 +489,12 @@ Infolgedessen kann der Client den Verlust einer Verbindung in kurzer Zeit erkenn
 Der Prototyp wurde so designt, dass er als Grundlage dient und mit weiteren, in dieser Arbeit beschriebenen Funktionen, erweitert werden kann.
 
 Gegenwärtig kann das Programm nur über die einzelnen Zustände informieren.
-Es gibt zum Beispiel Benachrichtigungen über den Aufbau und Verlust einer Verbindung.
+Es gibt z.~B. Benachrichtigungen über den Aufbau und Verlust einer Verbindung.
 Dem Prototyp ist es jedoch nicht möglich aktiv einen Alarm auf der Body-Cam auszulösen.
 Ebenfalls sind Schnittstellen zwischen der aktuellen Body-Cam und dem neuen Lone-Worker-Modus, zum Teil vorbereitet aber noch nicht verfügbar.
 
 Insgesamt wird durch den Prototyp eine solide Kommunikationsbasis geschafften, die in die bestehende Implementierung der Body-Cam eingebunden werden kann.
-Er gibt einen ersten Einblick wie eine stabile Verbindung zwischen Body-Cam und Überwachungszentrum realisiert wird.
+Der Prototyp gibt einen ersten Einblick wie eine stabile Verbindung zwischen Body-Cam und Überwachungszentrum realisiert wird.
 
 \subfilebib % Makes bibliography available when compiling as subfile
 \end{document}
