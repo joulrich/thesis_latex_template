@@ -4,7 +4,12 @@
 
 \chapter{Realisierung}\label{chap:realisierung}
 
-Nach der Planungs- und Designphase wird nun die Realisierung des Projekts behandelt. Im Detail, die Realisierung des Prototyps, der eine einfache Verbindung zwischen Client und Server ermöglicht sowie die Stabilität sicherstellt.
+Nach der Planungs- und Designphase wird nun die Realisierung des Projekts behandelt.
+Im Detail, die Realisierung des Prototyps, der eine einfache Verbindung zwischen Client und Server ermöglicht sowie die Stabilität sicherstellt.
+Dafür werden in \autoref{chap:technologien} zuerst alle technischen Grundlagen und Technologien erläutert, die für den Prototyp nötig sind.
+Danach folgt eine kurze Beschreibung des Entwicklungsprozesses.
+In \autoref{chap:implementierung} wird die aktuelle Funktionsweise des Prototyps anhand ausgewählter Codestellen erklärt.
+Anschließend wird gezeigt wie der Prototyp mithilfe eines Testprotokolls auf Stabilität und Funktionalität überprüft wurde.
 
 \section{Technologien und technische Grundlagen}\label{chap:technologien}
 
@@ -56,7 +61,7 @@ Für eine dauerhafte und zuverlässige Verbindung zwischen Body-Cam und Überwac
 Diese Möglichkeit wird von Mobilfunk oder WLAN nativ nicht zur Verfügung gestellt.
 Aus diesem Grund wurde für die Kommunikation im Prototypen ein Heartbeat-Mechanismus implementiert.
 
-Heartbeats sind spezielle Signale, die in der Regel zwischen Client- und Server-Anwendungen ausgetauscht werden.
+Heartbeats sind spezielle Signale, die in der Regel zwischen Client- und Server-Anwen-dungen ausgetauscht werden.
 Sie stellen sicher, dass die Verbindung zwischen den beiden Parteien aktiv und stabil bleibt.
 Diese Signale können beispielsweise als \glqq Herzschlag\grqq{} der Verbindung betrachtet werden.
 Damit wird gezeigt, dass die Verbindung immer noch besteht und dass die beteiligten Parteien bereit sind Daten auszutauschen.
@@ -91,7 +96,7 @@ Dabei wurde der Compiler G++ in der Version 9.4.0 genutzt.
 Als Programmiereditor wurde Visual Studio Code mit der Erweiterung \glqq clangd\grqq{} verwendet.
 Zur Versionsverwaltung wurde Git genutzt, mit einem eigenen Repository auf GitHub.
 
-\section{Implementierung}
+\section{Implementierung}\label{chap:implementierung}
 
 Im praktischen Teil der Bachelorarbeit wurde der Prototyp einer Client-Server-Verbindung implementiert.
 Das Hauptaugenmerk lag dabei auf der Umsetzung der Client-Seite.
@@ -132,6 +137,8 @@ Der Server-Timer wird ebenfalls neu gestartet, wenn der Server die Antwort regis
 Mit diesem Vorgehen soll sichergestellt werden, dass ein Verbindungsverlust rechtzeitig erkannt wird und eine schnelle Wiederherstellung der Verbindung vorgenommen werden kann.
 Im Fall eines detektierten Verlustes wird nach dem gleichen Prinzip vorgegangen wie bei einem Fehlerfall im Verbindungsaufbau.
 Das gewährleistet einen sauberen Wiederaufbau ohne mögliche Artefakte aus älteren Verbindungen.
+
+\pagebreak
 
 %Nachrichten klasse zeigen
 \begin{lstlisting}[caption={[Nachrichtenklasse im Prototypen]Nachrichtenklasse im Prototypen \lbrack eigene Darstellung\rbrack},captionpos=b,language=C++,label=messageklasse]
@@ -306,7 +313,7 @@ Speziell der Einsatz des asynchronen Konzepts erforderte ein hohes Maß an Einar
 Durch die Komplexität des nicht-linearen Programmablaufs gestaltet sich das Debugging als anspruchsvolle Aufgabe, welches aufwendigere Maßnahmen zur Fehlerbehebung erforderlich machte.
 % hier vllt. ein Vermerk auf einen Text im Anhang machen der genauere Probleme zeigte ehemalige Herausforderungen
 
-\section{Ergebnisse}
+\section{Ergebnisse}\label{chap:ergebnisse}
 
 Im Kontext der vorliegenden Arbeit sowie der Anforderungen, die an eine PNA durch die DGUV gestellt werden, hat sich herausgestellt das die Stabilität und Zuverlässigkeit einen wesentlichen Bestandteil bilden.
 Der Verbindungsaufbau und -abbau sowie die saubere Wiederherstellung der Verbindung im Fehlerfall repräsentieren das Kernstück des Lone-Worker-Modus.

@@ -4,6 +4,12 @@
 
 \chapter{Grundlagen}\label{chap:grundlagen}
 
+Zur Erarbeitung einer Lone-Worker-Verbindung zwischen Body-Cam und Überwachungszentrum müssen als Erstes die Grundlagen geschaffen werden.
+In \autoref{chap:alleinarbeit} wird zunächst erklärt was Alleinarbeit ist und welche Lösungen es dafür bereits gibt.
+Danach wird der aktuelle Zustand der Body-Cam gezeigt und anschließend wie dieser durch einen Lone-Worker-Modus erweitert werden kann.
+In \autoref{chap:gesamtsystem} wird das Gesamtsystem einer Lone-Worker-Verbindung vorgestellt.
+Daraufhin werden die Anforderungen erläutert, die sich an das neue Lone-Worker-Feature stellen.
+
 \section{Aktuelle Alleinarbeitslösungen}\label{chap:alleinarbeit}
 
 Im Arbeitsalltag treten immer wieder Situationen auf, die zur Gefährdung von Personen führen.
@@ -82,7 +88,7 @@ Diese beruht auf der Norm \glqq DIN VDE V 0825-11: Geräte- und Prüfanforderung
 Die als Gegenstand dieser Arbeit vorgestellte Body-Cam ist in die Kategorie der PNA einzuordnen.
 Genauere Details der einzelnen Funktionen werden in \autoref{chap:funktionen} beschrieben.
 
-\section{IST-Zustand Body-Cam}
+\section{IST-Zustand der Body-Cam}\label{chap:istZustand}
 
 \begin{figure}[h]
     \centering
@@ -145,7 +151,7 @@ Hier kann im Zweifel die Kamera herausgegeben werden, um eine weitere Eskalation
 Mit dem übermittelten Material kann dann umgehend eine Fahndung und Unterstützung eingeleitet werden.
 % Beide Systemvarianten decken die Zielstellungen Prävention, Deeskalation und Dokumentation zuverlässig ab.
 
-\section{Erweiterung der Body-Cam mit dem Alleinarbeits-Modus}
+\section{Erweiterung der Body-Cam mit dem Lone-Worker-Modus}\label{chap:erweiterung}
 
 Durch die im vorherigen Kapitel beschriebenen, umfassenden Einsatzmöglichkeiten und Funktionen bringt die Body-Cam bereits viele Eigenschaften mit, die sie als eine PNA für Alleinarbeit nach DGUV Regel 112-139 \cite[][]{Regel_112-139} qualifiziert.
 So besitzt die Body-Cam beispielsweise eine ausreichende Schutzklasse, ist mit Mobilfunk, WLAN sowie Bluetooth ausgestattet, kann bei hohen und niedrigen Temperaturen betrieben werden und lässt sich einfach und zuverlässig in schwierigen Situation bedienen.
@@ -173,7 +179,7 @@ Der Modus verwaltet alle Alarme, Voralarme und Alarmwiederholungen sowie die Sta
 Audio- und Videodaten sowie Standortinformationen werden dabei bereits durch Kamera, Mikrofon und GPS erfasst und müssen in die neue Funktion eingebunden werden.
 Der Lone-Worker-Modus erweitert also die bestehenden Funktionen der Body-Cam zur Prävention, Deeskalation und Protokollierung um eine Möglichkeit, sie als eine PNA für Alleinarbeit zuverlässig einzusetzen.
 
-\section{Komponentenbeschreibung des Gesamtsystems}
+\section{Komponentenbeschreibung des Gesamtsystems}\label{chap:gesamtsystem}
 
 \begin{figure}[h]
     \centering
@@ -212,7 +218,7 @@ Den Aufbau und Abbau von Verbindungen sowie das Anfordern und Darstellen von Inf
 durch einen Automatismus realisiert.
 
 % \section{Use-Cases}
-\section{Anforderungen des Gesamtsystems}
+\section{Anforderungen an das Gesamtsystem}\label{chap:anforderungen}
 Die Anforderungen, die an das neue Lone-Worker-Feature gestellt werden, ergeben sich durch verschiedene DGUV-Normen sowie zusätzliche Unternehmensanforderungen.
 Folgenden Bestimmungen richten sich dabei an das Gesamtsystem des Lone-Worker Feature und sind keine Anforderungen an den praktischen Teil dieser Arbeit.
 Der implementierte Prototyp legt einen Grundbaustein für die spätere Umsetzung aller Funktionalitäten des Lone-Worker-Modus.

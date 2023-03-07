@@ -10,7 +10,7 @@
 \usepackage{lmodern}
 \usepackage{setspace}
 \usepackage[labelfont=bf]{caption} % font=small,  ?
-\usepackage{acronym}
+\usepackage[nohyperlinks]{acronym}
 \usepackage{amsmath}
 \usepackage{marvosym}
 \usepackage[pdftex]{graphicx}
@@ -100,6 +100,8 @@
 
 \begin{document}
 
+
+
 % Undef subfilebib for main file, so there is only one bibliography when compiling the whole thesis.
 \def\subfilebib{}
 
@@ -127,9 +129,10 @@
 \renewcommand{\thesection}{\Alph{section}.}
 \renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
 \subfile{appendix-formulas}
+\subfile{acronyms}
 
 \listoffigures
-% \renewcommand{\lstlistlistingname}{Listingverzeichnis}
+\renewcommand{\lstlistlistingname}{Listingsverzeichnis}
 \lstlistoflistings
 
 \bibliographystyle{alphaurl}

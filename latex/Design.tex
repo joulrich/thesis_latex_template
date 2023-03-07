@@ -4,6 +4,12 @@
 
 \chapter{Design}\label{chap:design}
 
+Kernthema dieser Arbeit ist die Entwicklung eines Kommunikationsprotokolls für eine Lone-Worker-Verbindung zwischen der Body-Cam und einem Überwachungszentrum.
+In \autoref{chap:funktionen} werden zuerst die Funktionen des Lone-Worker-Modus der Body-Cam erläutert, die für einen vollständigen Einsatz als Alleinarbeitslösung abgebildet werden müssen.
+Nachfolgend wird das Design des Kommunikationsprotokolls beschrieben.
+In \autoref{chap:primitiven} werden die Schnittstellen zwischen der vorhandenen Implementierung der Body-Cam und dem Lone-Worker-Modus vorgestellt.
+Als Letztes wird mit einer Statemachine und Zustandsdiagrammen die Entwicklung des Prototyps im praktischen Teil dieser Arbeit vorbereitet.
+
 \section{Erarbeitung aller Funktionen}\label{chap:funktionen}
 Nach Auswertung der Anforderungen lassen sich folgende Funktionen herausarbeiten, die der Lone-Worker-Modus leisten soll.
 \begin{itemize}
@@ -158,7 +164,7 @@ Diese realisiert eine aktive Sprachverbindung zwischen Operator und Lone-Worker.
 
 % \pagebreak
 
-\section{Statemachine}
+\section{Statemachine}\label{chap:statemachine}
 
 \begin{figure}[h]
     \centering
